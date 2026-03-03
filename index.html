@@ -63,25 +63,33 @@
             text-shadow: 3px 3px 12px rgba(0,0,0,1); z-index: 2; position: relative;
         }
 
-        /* شريط المواقيت السفلي */
+        /* شريط المواقيت السفلي مع خلفية سماء */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
             height: 180px; 
-            background: rgba(255, 255, 255, 0.9); /* خلفية فاتحة ليظهر النص الأسود */
+            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?q=80&w=2000') center/cover no-repeat;
             border-top: 3px solid var(--gold);
+            position: relative;
         }
+
+        /* طبقة تفتيح خفيفة فوق السماء لزيادة وضوح النص الأسود */
+        .bottom-grid::before {
+            content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.3); z-index: 1;
+        }
+
         .p-box { 
+            position: relative; z-index: 2;
             border-left: 1px solid rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
         }
-        .p-box.active { 
-            background: var(--gold); 
-            border-top: 8px solid #000; 
-        }
-        .p-box .name { font-size: 1.8rem; color: #000; margin-bottom: 5px; font-weight: bold; }
         
-        /* لون الأرقام (المواقيت) بالأسود */
-        .p-box .time { font-size: 2.5rem; font-weight: 900; color: #000; } 
+        .p-box.active { 
+            background: rgba(212, 175, 55, 0.6); 
+            border-top: 10px solid #000; 
+        }
+
+        .p-box .name { font-size: 1.8rem; color: #000; margin-bottom: 5px; font-weight: 900; }
+        .p-box .time { font-size: 2.5rem; font-weight: 900; color: #000; text-shadow: 0px 0px 1px rgba(255,255,255,0.5); } 
     </style>
 </head>
 <body>
