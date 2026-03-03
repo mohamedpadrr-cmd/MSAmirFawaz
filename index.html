@@ -3,116 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جامع الأمير فواز</title>
+    <title>شاشة جامع الأمير فواز</title>
     <style>
-        :root { --gold: #dfbd69; --bg: #000; --box: #111; --border: #333; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            background-color: var(--bg); color: white; font-family: 'Arial', sans-serif;
-            height: 100vh; display: flex; flex-direction: column; overflow: hidden; padding: 30px;
-            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com');
-            background-size: cover; background-position: center;
+        :root {
+            --gold: #dfbd69;
+            --bg-dark: #000;
+            --box-bg: rgba(20, 20, 20, 0.9);
+            --border: #333;
         }
 
-        /* تقسيم الشاشة لـ 3 أقسام رئيسية */
-        .main-container { display: grid; grid-template-columns: 1fr 1.5fr; flex-grow: 1; gap: 40px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* الجانب الأيمن (الاسم والذكر) */
-        .right-side { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; }
-        .mosque-title { font-size: 5.5rem; color: var(--gold); font-weight: bold; margin-top: 10px; }
-        .dhikr-area { display: flex; align-items: center; gap: 30px; margin-bottom: 50px; }
-        .dhikr-line { width: 12px; height: 140px; background: var(--gold); border-radius: 6px; }
-        #dhikr-text { font-size: 7rem; font-weight: bold; line-height: 1.2; }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+            /* خلفية المسجد من الصورة */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com');
+            background-size: cover;
+            background-position: center;
+        }
 
-        /* الجانب الأيسر (الساعات والتواريخ) */
-        .left-side { display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
-        .clock-box { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .analog { width: 160px; height: 160px; border: 5px solid var(--gold); border-radius: 50%; position: relative; }
+        /* 1️⃣ اسم الجامع (أعلى اليمين) */
+        .mosque-title {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 5.5rem;
+            color: var(--gold);
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* 2️⃣ منطقة الساعة (أعلى اليسار) */
+        .clock-area {
+            position: absolute;
+            top: 30px;
+            left: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .analog-clock {
+            width: 170px; height: 170px;
+            border: 5px solid var(--gold);
+            border-radius: 50%;
+            position: relative;
+            background: rgba(0,0,0,0.4);
+        }
         .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 10px; }
-        .hour { width: 6px; height: 45px; background: white; }
-        .min { width: 4px; height: 65px; background: #bbb; }
-        .sec { width: 2px; height: 75px; background: var(--gold); }
-        .digital { font-size: 6rem; color: var(--gold); background: var(--box); padding: 10px 50px; border-radius: 15px; border: 1px solid var(--border); font-weight: bold; }
-        
-        .dates-container { display: flex; flex-direction: column; gap: 15px; width: 100%; align-items: center; }
-        .date-item { background: var(--box); font-size: 2.2rem; padding: 12px 30px; border-radius: 10px; border: 1px solid var(--border); width: 90%; text-align: center; }
+        .hour { width: 6px; height: 50px; background: white; z-index: 3; }
+        .min { width: 4px; height: 75px; background: #ddd; z-index: 2; }
+        .sec { width: 2px; height: 85px; background: var(--gold); z-index: 1; }
 
-        /* الجزء السفلي (مواقيت الصلاة) */
-        .prayer-section { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; }
-        .prayer-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 15px; }
-        .p-card { border: 2px solid var(--border); border-radius: 15px; text-align: center; padding: 15px; background: rgba(15,15,15,0.9); position: relative; }
-        .p-card.active { border-color: var(--gold); background: rgba(223, 189, 105, 0.2); transform: scale(1.05); }
-        .next-tag { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 2px 15px; border-radius: 6px; font-size: 1rem; font-weight: bold; display: none; }
+        .digital-clock {
+            font-size: 6rem;
+            color: var(--gold);
+            background: var(--box-bg);
+            padding: 10px 50px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            font-weight: bold;
+        }
+
+        /* 3️⃣ منطقة الذكر (وسط اليمين مع الخط الذهبي) */
+        .dhikr-section {
+            position: absolute;
+            top: 40%;
+            right: 60px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .dhikr-line {
+            width: 12px;
+            height: 150px;
+            background: var(--gold);
+            border-radius: 6px;
+        }
+
+        #dhikr-text {
+            font-size: 7.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* 4️⃣ التواريخ (وسط اليسار) */
+        .dates-area {
+            position: absolute;
+            top: 45%;
+            left: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .date-box {
+            background: var(--box-bg);
+            font-size: 2.2rem;
+            padding: 12px 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+            min-width: 320px;
+        }
+
+        /* 5️⃣ شريط مواقيت الصلاة (الأسفل) */
+        .prayer-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            padding: 20px 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .prayer-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .prayer-card {
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(20,20,20,0.9);
+            position: relative;
+        }
+
+        .prayer-card.active {
+            border-color: var(--gold);
+            background: rgba(223, 189, 105, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .next-tag {
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: black; padding: 2px 15px;
+            border-radius: 6px; font-size: 1rem; font-weight: bold;
+            display: none;
+        }
         .active .next-tag { display: block; }
-        .p-name { font-size: 1.8rem; color: #aaa; margin-bottom: 5px; }
-        .active .p-name { color: white; font-weight: bold; }
-        .p-time { font-size: 2.5rem; font-weight: bold; }
 
-        .iqama-row { display: flex; justify-content: center; }
-        .iqama-bar { background: var(--gold); color: black; font-size: 3rem; font-weight: bold; padding: 10px 100px; border-radius: 15px; width: 70%; text-align: center; }
+        .p-label { font-size: 1.8rem; color: #aaa; margin-bottom: 5px; }
+        .active .p-label { color: white; font-weight: bold; }
+        .p-time { font-size: 2.6rem; font-weight: bold; }
+
+        .iqama-bar {
+            background: var(--gold);
+            color: black;
+            font-size: 3.2rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+            width: 60%;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <!-- يمين: اسم الجامع والذكر -->
-        <div class="right-side">
-            <h1 class="mosque-title">جَامِع الأَمير فَواز</h1>
-            <div class="dhikr-area">
-                <div class="dhikr-line"></div>
-                <div id="dhikr-text">أستغفر الله العظيم</div>
-            </div>
-        </div>
+    <!-- اسم الجامع -->
+    <div class="mosque-title">جَامِع الأَمير فَواز</div>
 
-        <!-- يسار: الساعات والتواريخ -->
-        <div class="left-side">
-            <div class="clock-box">
-                <div class="analog">
-                    <div class="hand hour" id="h-hand"></div>
-                    <div class="hand min" id="m-hand"></div>
-                    <div class="hand sec" id="s-hand"></div>
-                </div>
-                <div class="digital" id="digi-clock">00:00 ص</div>
-            </div>
-            <div class="dates-container">
-                <div class="date-item" id="g-date">-- --- 2026 م</div>
-                <div class="date-item" id="h-date">-- --- 1447 هـ</div>
-            </div>
+    <!-- الساعة -->
+    <div class="clock-area">
+        <div class="analog-clock">
+            <div class="hand hour" id="h-hand"></div>
+            <div class="hand min" id="m-hand"></div>
+            <div class="hand sec" id="s-hand"></div>
         </div>
+        <div class="digital-clock" id="digi-clock">00:00 ص</div>
     </div>
 
-    <!-- الأسفل: مواقيت الصلاة والإقامة -->
-    <div class="prayer-section">
-        <div class="prayer-grid" id="prayer-grid"></div>
-        <div class="iqama-row">
-            <div class="iqama-bar" id="iqama-text">الإقامة بعد: 10:00 د</div>
+    <!-- التواريخ -->
+    <div class="dates-area">
+        <div class="date-box" id="g-date">-- سبتمبر 2024 م</div>
+        <div class="date-box" id="h-date">-- ربيع الأول 1446 هـ</div>
+    </div>
+
+    <!-- الأذكار -->
+    <div class="dhikr-section">
+        <div id="dhikr-text">أستغفر الله العظيم</div>
+        <div class="dhikr-line"></div>
+    </div>
+
+    <!-- مواقيت الصلاة -->
+    <div class="prayer-footer">
+        <div class="prayer-grid" id="prayer-grid">
+            <!-- سيتم ملؤها برمجياً -->
         </div>
+        <div class="iqama-bar" id="iqama-text">الإقامة بعد: 10:00 د</div>
     </div>
 
     <script>
+        // الأذكار تتغير كل 30 ثانية
         const dhikrs = ["أستغفر الله العظيم", "لا إله إلا الله", "سبحان الله وبحمده", "صلّ على محمد", "الحمد لله رب العالمين"];
         let dIdx = 0;
         setInterval(() => {
-            const el = document.getElementById('dhikr-text');
-            el.style.opacity = 0;
-            setTimeout(() => {
-                dIdx = (dIdx + 1) % dhikrs.length;
-                el.innerText = dhikrs[dIdx];
-                el.style.opacity = 1;
-            }, 800);
+            dIdx = (dIdx + 1) % dhikrs.length;
+            document.getElementById('dhikr-text').innerText = dhikrs[dIdx];
         }, 30000);
 
+        // جلب المواقيت وتحديث الشاشة
         async function fetchPrayers() {
             try {
+                // مدينة جدة - جامع الأمير فواز
                 const res = await fetch('https://api.aladhan.com');
                 const data = await res.json();
                 const t = data.data.timings;
-                updatePrayerGrid([
+                
+                const list = [
                     {n: "الفجر", t: t.Fajr}, {n: "الشروق", t: t.Sunrise}, {n: "الظهر", t: t.Dhuhr},
                     {n: "العصر", t: t.Asr}, {n: "المغرب", t: t.Maghrib}, {n: "العشاء", t: t.Isha}
-                ]);
-            } catch(e) { console.log("خطأ في جلب المواقيت"); }
+                ];
+                renderPrayers(list);
+            } catch(e) { console.log("API Error"); }
         }
 
         function format12(t24) {
@@ -121,7 +240,7 @@
             return `${h % 12 || 12}:${m} ${s}`;
         }
 
-        function updatePrayerGrid(list) {
+        function renderPrayers(list) {
             const grid = document.getElementById('prayer-grid');
             grid.innerHTML = '';
             const now = new Date();
@@ -136,19 +255,20 @@
             list.forEach((p, i) => {
                 const active = i === nextIdx ? 'active' : '';
                 grid.innerHTML += `
-                    <div class="p-card ${active}">
+                    <div class="prayer-card ${active}">
                         <div class="next-tag">الصلاة القادمة</div>
-                        <div class="p-name">${p.n}</div>
+                        <div class="p-label">${p.n}</div>
                         <div class="p-time">${format12(p.t)}</div>
                     </div>`;
             });
         }
 
-        function updateTime() {
+        function updateClock() {
             const now = new Date();
             let h = now.getHours();
+            const m = String(now.getMinutes()).padStart(2, '0');
             const ampm = h >= 12 ? 'م' : 'ص';
-            document.getElementById('digi-clock').innerText = `${String(h % 12 || 12).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} ${ampm}`;
+            document.getElementById('digi-clock').innerText = `${h % 12 || 12}:${m} ${ampm}`;
             
             document.getElementById('s-hand').style.transform = `rotate(${now.getSeconds()*6}deg)`;
             document.getElementById('m-hand').style.transform = `rotate(${now.getMinutes()*6}deg)`;
@@ -159,10 +279,10 @@
             document.getElementById('h-date').innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-uma', opt).format(now) + " هـ";
         }
 
-        setInterval(updateTime, 1000);
-        updateTime();
+        setInterval(updateClock, 1000);
+        updateClock();
         fetchPrayers();
-        setInterval(fetchPrayers, 3600000);
+        setInterval(fetchPrayers, 3600000); // تحديث المواقيت كل ساعة
     </script>
 </body>
 </html>
