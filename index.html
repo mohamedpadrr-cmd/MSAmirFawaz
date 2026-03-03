@@ -12,66 +12,74 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            /* خلفية المسجد النبوي كاملة وواضحة بدون أي تعتيم */
             background: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat fixed;
             color: #fff; font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
         }
 
-        /* تم إزالة طبقة الـ overlay الداكنة هنا */
-
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
         .top-bar { 
-            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: space-between; 
-            padding: 15px 50px; border-bottom: 3px solid var(--real-gold); font-size: 2rem; font-weight: bold;
+            background: rgba(0, 0, 0, 0.5); display: flex; justify-content: space-between; 
+            padding: 15px 50px; border-bottom: 2px solid var(--real-gold); font-size: 2rem; font-weight: bold;
             color: var(--real-gold); text-shadow: 2px 2px 4px #000;
         }
 
         .main-content { 
             display: grid; grid-template-columns: 420px 1fr; gap: 30px; 
-            padding: 30px; flex: 1; align-items: stretch;
+            padding: 30px; flex: 1; align-items: center; /* توسيط المحتوى عمودياً */
         }
 
-        /* جعل اللوحات نصف شفافة لتظهر الخلفية من خلفها */
+        /* لوحة الساعة الجانبية - شفافة جداً */
         .left-panel { 
-            background: rgba(0, 0, 0, 0.4); border: 2px solid var(--real-gold); 
-            border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px); /* تعتيم خفيف جداً خلف النص فقط لضمان الوضوح */
+            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(212, 175, 55, 0.5); 
+            border-radius: 25px; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 100%; backdrop-filter: blur(5px);
         }
 
         #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 5px 5px 15px rgba(0,0,0,1); }
         #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; text-shadow: 2px 2px 8px #000; }
 
+        /* منطقة الأذكار - كتابة فقط في الهواء */
         .center-panel { 
-            background: rgba(0, 0, 0, 0.3); border-radius: 40px; border: 4px solid var(--real-gold); 
-            display: flex; align-items: center; justify-content: center; padding: 40px; text-align: center;
-            backdrop-filter: blur(3px);
+            background: none; /* إزالة الخلفية */
+            border: none;     /* إزالة الحدود */
+            display: flex; align-items: center; justify-content: center; 
+            padding: 20px; text-align: center;
         }
         
         #zikr-text { 
-            font-size: 4.5rem; font-weight: 900; line-height: 1.5; color: var(--real-gold);
-            text-shadow: 4px 4px 15px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,0.8);
+            font-size: 5rem; /* حجم أكبر للكتابة العائمة */
+            font-weight: 900; 
+            line-height: 1.4; 
+            color: var(--real-gold);
+            /* ظل أسود قوي لجعل الكتابة تبرز بوضوح فوق أي خلفية */
+            text-shadow: 
+                4px 4px 10px rgba(0,0,0,1), 
+                -4px -4px 10px rgba(0,0,0,1),
+                0 0 25px rgba(0,0,0,0.8);
+            position: relative;
         }
 
-        /* شريط المواقيت السفلي شفاف ليظهر جمال الصورة */
+        /* شريط المواقيت السفلي */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 220px; background: rgba(0, 0, 0, 0.7); border-top: 4px solid var(--real-gold);
+            height: 200px; background: rgba(0, 0, 0, 0.6); border-top: 3px solid var(--real-gold);
+            backdrop-filter: blur(10px);
         }
 
         .p-box { 
-            border-left: 1px solid rgba(212, 175, 55, 0.3); display: flex; flex-direction: column; 
+            border-left: 1px solid rgba(212, 175, 55, 0.2); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
         }
         
         .p-box.active { 
-            background: rgba(212, 175, 55, 0.25);
-            border-top: 10px solid var(--real-gold);
+            background: rgba(212, 175, 55, 0.2);
+            border-top: 8px solid var(--real-gold);
         }
 
-        .p-box .name { font-size: 2rem; color: #fff; margin-bottom: 10px; font-weight: bold; text-shadow: 2px 2px 4px #000; }
+        .p-box .name { font-size: 1.8rem; color: #fff; margin-bottom: 5px; font-weight: bold; text-shadow: 2px 2px 4px #000; }
 
-        /* الأرقام الذهبية الملكية 3D مع ظل قوي جداً */
+        /* الأرقام الذهبية الملكية 3D */
         .p-box .time { 
             font-size: 3.5rem; 
             font-weight: 900; 
@@ -94,14 +102,14 @@
             <div class="left-panel">
                 <div id="digi-time">00:00</div>
                 <div id="ampm">--</div>
-                <div style="color:#fff; font-size:1.8rem; border-top:1px solid var(--real-gold); padding-top:20px; width:80%; text-align:center; text-shadow: 2px 2px 4px #000;">
+                <div style="color:#fff; font-size:1.6rem; border-top:1px solid rgba(212, 175, 55, 0.5); padding-top:20px; width:80%; text-align:center; text-shadow: 2px 2px 4px #000;">
                     الصلاة القادمة: <br>
                     <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem; text-shadow: 3px 3px 6px #000;">--</span>
                 </div>
             </div>
 
             <div class="center-panel">
-                <div id="zikr-text">سبحان الله وبحمده</div>
+                <div id="zikr-text">جاري تحميل الأذكار...</div>
             </div>
         </div>
 
@@ -153,7 +161,8 @@
         "«سبحان الله وبحمده، سبحان الله العظيم»",
         "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
         "«اللهم صلِ وسلم على نبينا محمد»",
-        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»"
+        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»",
+        "«أستغفر الله العظيم وأتوب إليه»"
     ];
     let zIdx = 0;
     function cycleZikr() {
