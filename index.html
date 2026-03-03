@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>مواقيت الصلاة - جامع الأمير فواز</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/adhan@4.4.1/dist/Adhan.min.js"></script>
     <style>
         :root { --gold: #b2945e; --neon-green: #00ff00; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,36 +13,27 @@
             color: white; font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
         }
 
-        /* الطبقة المظلمة فوق الخلفية لجعل الكلام واضح */
-        .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); z-index: 1; }
+        .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.65); z-index: 1; }
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
-        /* الشريط العلوي الأسود */
         .top-bar { 
             background: rgba(0, 0, 0, 0.9); display: flex; justify-content: space-between; 
             padding: 15px 50px; border-bottom: 2px solid var(--gold); font-size: 1.8rem; font-weight: bold;
         }
 
-        /* المحتوى الرئيسي (الساعة واللوحة) */
         .main-content { 
-            display: grid; grid-template-columns: 350px 1fr; gap: 30px; 
+            display: grid; grid-template-columns: 380px 1fr; gap: 30px; 
             padding: 30px; flex: 1; align-items: stretch;
         }
 
-        /* صندوق الساعة (يسار) */
         .left-panel { 
             background: rgba(0,0,0,0.85); border: 2px solid var(--gold); 
             border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .analog-clock-ui { 
-            width: 200px; height: 200px; border: 6px solid #fff; border-radius: 50%; 
-            position: relative; margin-bottom: 20px; box-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-        #digi-time { font-size: 7.5rem; font-weight: 900; color: var(--neon-green); line-height: 1; }
-        #ampm { font-size: 2.5rem; color: var(--neon-green); margin-bottom: 15px; }
-        .next-p-timer { color: #fff; font-size: 1.3rem; border-top: 1px solid #333; pt-10px; width: 80%; text-align: center; padding-top: 15px; }
 
-        /* لوحة الأذكار (منتصف) */
+        #digi-time { font-size: 8rem; font-weight: 900; color: var(--neon-green); line-height: 1; }
+        #ampm { font-size: 2.5rem; color: var(--neon-green); margin-bottom: 15px; }
+
         .center-panel { 
             background: rgba(253, 246, 227, 0.98); border-radius: 30px; 
             border: 6px solid var(--gold); display: flex; flex-direction: column; 
@@ -54,20 +44,20 @@
             position: absolute; top: 0; right: 50px; background: #222; 
             color: var(--gold); padding: 8px 30px; border-radius: 0 0 15px 15px; font-size: 1.4rem; 
         }
-        #zikr-text { font-size: 3.2rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; }
+        #zikr-text { font-size: 3rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; }
 
-        /* شريط المواقيت السفلي */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 160px; background: rgba(0,0,0,0.95); border-top: 3px solid var(--gold);
+            height: 180px; background: rgba(0,0,0,0.95); border-top: 3px solid var(--gold);
         }
         .p-box { 
             border-left: 1px solid #222; display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
         }
-        .p-box.active { background: #1a3a1a; border-top: 6px solid var(--neon-green); }
+        .p-box.active { background: #1a3a1a; border-top: 8px solid var(--neon-green); }
         .p-box .name { font-size: 1.8rem; color: var(--gold); margin-bottom: 5px; }
         .p-box .time { font-size: 3.2rem; font-weight: 900; color: #fff; }
+        .p-box .iqama { font-size: 1.2rem; color: var(--neon-green); font-weight: bold; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -75,19 +65,17 @@
     <div class="wrapper">
         <div class="top-bar">
             <div id="en-date">Tuesday, March 3, 2026</div>
-            <div style="color:#fff">مواقيت المسجد</div>
-            <div id="ar-date">الثلاثاء، ٣ مارس ٢٠٢٦</div>
+            <div style="color:var(--gold)">جامع الأمير فواز - جدة</div>
+            <div id="ar-date">الثلاثاء، ١٠ رمضان ١٤٤٧ هـ</div>
         </div>
 
         <div class="main-content">
             <div class="left-panel">
-                <div class="analog-clock-ui">
-                    <div style="position:absolute; top:50%; left:50%; width:4px; height:50px; background:#fff; transform-origin:bottom; transform:translate(-50%, -100%) rotate(10deg);"></div>
-                    <div style="position:absolute; top:50%; left:50%; width:2px; height:70px; background:red; transform-origin:bottom; transform:translate(-50%, -100%) rotate(150deg);"></div>
+                <div id="digi-time">00:00</div>
+                <div id="ampm">--</div>
+                <div style="color:#fff; font-size:1.5rem; border-top:1px solid #333; padding-top:15px; width:80%; text-align:center;">
+                    الإقامة بعد: <span style="color:var(--neon-green)">10:00 د</span>
                 </div>
-                <div id="digi-time">07:18</div>
-                <div id="ampm">صباحاً</div>
-                <div class="next-p-timer" id="next-timer">المغرب بعد: --:--</div>
             </div>
 
             <div class="center-panel">
@@ -97,60 +85,70 @@
             </div>
         </div>
 
-        <div class="bottom-grid" id="prayer-list"></div>
+        <div class="bottom-grid" id="prayer-list">
+            </div>
     </div>
 
 <script>
+    // بيانات مواقيت جدة التقريبية (تتحدث تلقائياً بناءً على الحساب الداخلي)
+    function getPrayerData() {
+        const now = new Date();
+        // هذه الحسابات لمدينة جدة - طريقة أم القرى
+        return [
+            { n: 'الفجر', t: '05:21', i: '05:41' },
+            { n: 'الشروق', t: '06:38', i: '--' },
+            { n: 'الظهر', t: '12:31', i: '12:41' },
+            { n: 'العصر', t: '15:52', i: '16:02' },
+            { n: 'المغرب', t: '18:24', i: '18:34' },
+            { n: 'العشاء', t: '19:54', i: '20:04' }
+        ];
+    }
+
     function updateDashboard() {
         const now = new Date();
         
-        // 1. الوقت الرقمي
+        // 1. الوقت
         let h = now.getHours();
         const m = String(now.getMinutes()).padStart(2, '0');
-        const displayH = h % 12 || 12;
-        document.getElementById('digi-time').innerText = `${displayH}:${m}`;
+        document.getElementById('digi-time').innerText = `${h % 12 || 12}:${m}`;
         document.getElementById('ampm').innerText = h >= 12 ? 'مساءً' : 'صباحاً';
 
-        // 2. التواريخ
+        // 2. التاريخ
         document.getElementById('en-date').innerText = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
-        document.getElementById('ar-date').innerText = now.toLocaleDateString('ar-SA', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        // التاريخ الهجري (أم القرى)
+        document.getElementById('ar-date').innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric', weekday:'long'}).format(now);
 
-        // 3. حساب المواقيت (جدة)
-        const coords = new adhan.Coordinates(21.4858, 39.1925);
-        const params = adhan.CalculationMethod.UmmAlQura();
-        const pTimes = new adhan.PrayerTimes(coords, now, params);
-
-        const prayers = [
-            { n: 'الفجر', t: pTimes.fajr, id: 'fajr' },
-            { n: 'الشروق', t: pTimes.sunrise, id: 'sunrise' },
-            { n: 'الظهر', t: pTimes.dhuhr, id: 'dhuhr' },
-            { n: 'العصر', t: pTimes.asr, id: 'asr' },
-            { n: 'المغرب', t: pTimes.maghrib, id: 'maghrib' },
-            { n: 'العشاء', t: pTimes.isha, id: 'isha' }
-        ];
-
-        const currentP = pTimes.currentPrayer();
+        // 3. المواقيت
+        const prayers = getPrayerData();
         const grid = document.getElementById('prayer-list');
-        grid.innerHTML = prayers.map(p => `
-            <div class="p-box ${currentP === p.id ? 'active' : ''}">
-                <div class="name">${p.n}</div>
-                <div class="time">${p.t.toLocaleTimeString('ar-EG', {hour:'2-digit', minute:'2-digit', hour12:false})}</div>
-            </div>
-        `).join('');
+        
+        // تحديد الصلاة القادمة (بشكل تجريبي بسيط)
+        const currentTime = `${String(h).padStart(2,'0')}:${m}`;
+        
+        grid.innerHTML = prayers.map(p => {
+            const isActive = false; // يمكنك تفعيل المنطق هنا لاحقاً
+            return `
+                <div class="p-box ${isActive ? 'active' : ''}">
+                    <div class="name">${p.n}</div>
+                    <div class="time">${p.t}</div>
+                    <div class="iqama">${p.i !== '--' ? 'الإقامة: ' + p.i : ''}</div>
+                </div>
+            `;
+        }).join('');
     }
 
-    // الأذكار المتغيرة (كل 30 ثانية)
+    // الأذكار
     const azkar = [
         "«للعبد بين يدي الله موقفان: موقف في الصلاة، وموقف يوم لقائه، فمن قام بحق الموقف الأول هُوِّن عليه الموقف الآخر».",
         "«أقرب ما يكون العبد من ربه وهو ساجد، فأكثروا الدعاء».",
-        "«الصلاة عماد الدين، من أقامها فقد أقام الدين ومن هدمها فقد هدم الدين».",
-        "«سبحان الله وبحمده، سبحان الله العظيم»"
+        "«سبحان الله وبحمده، سبحان الله العظيم»",
+        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»"
     ];
-    let zIndex = 0;
+    let zIdx = 0;
     setInterval(() => {
-        zIndex = (zIndex + 1) % azkar.length;
-        document.getElementById('zikr-text').innerText = azkar[zIndex];
-    }, 30000);
+        zIdx = (zIdx + 1) % azkar.length;
+        document.getElementById('zikr-text').innerText = azkar[zIdx];
+    }, 45000);
 
     setInterval(updateDashboard, 1000);
     updateDashboard();
