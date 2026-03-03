@@ -8,25 +8,26 @@
         :root { 
             --gold-3d: linear-gradient(to bottom, #f1d592 0%, #d4af37 40%, #b2945e 100%);
             --real-gold: #d4af37;
-            --islamic-pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
+            /* صورة المسجد النبوي كخلفية كاملة */
+            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat fixed;
             color: #fff; font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
         }
 
+        /* طبقة تظليل فوق الصورة لضمان وضوح الكتابة */
         .overlay { 
             position: absolute; inset: 0; 
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), var(--islamic-pattern); 
+            background: rgba(0, 0, 0, 0.65); 
             z-index: 1; 
         }
 
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
         .top-bar { 
-            background: rgba(0, 0, 0, 0.95); display: flex; justify-content: space-between; 
+            background: rgba(0, 0, 0, 0.8); display: flex; justify-content: space-between; 
             padding: 15px 50px; border-bottom: 3px solid var(--real-gold); font-size: 2rem; font-weight: bold;
             color: var(--real-gold);
         }
@@ -37,56 +38,49 @@
         }
 
         .left-panel { 
-            background: rgba(15, 15, 15, 0.9); border: 2px solid var(--real-gold); 
+            background: rgba(0, 0, 0, 0.7); border: 2px solid var(--real-gold); 
             border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
         #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 3px 3px 10px rgba(0,0,0,1); }
         #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; }
 
         .center-panel { 
-            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
-            border-radius: 40px; border: 8px solid var(--real-gold); 
-            display: flex; align-items: center; justify-content: center; padding: 60px; text-align: center;
-            position: relative; overflow: hidden;
+            background: rgba(0, 0, 0, 0.5); border-radius: 40px; border: 4px solid var(--real-gold); 
+            display: flex; align-items: center; justify-content: center; padding: 40px; text-align: center;
         }
-
-        .center-panel::after { content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1; }
         
         #zikr-text { 
             font-size: 4.5rem; font-weight: 900; line-height: 1.5; color: var(--real-gold);
-            text-shadow: 4px 4px 15px rgba(0,0,0,1); z-index: 2; position: relative;
+            text-shadow: 4px 4px 15px rgba(0,0,0,1);
         }
 
-        /* شريط المواقيت السفلي الأسود الملكي */
+        /* شريط المواقيت السفلي الأسود الملكي مع شفافية بسيطة */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 220px; background: #000; border-top: 4px solid var(--real-gold);
-            box-shadow: 0 -10px 40px rgba(0,0,0,1);
+            height: 220px; background: rgba(0, 0, 0, 0.85); border-top: 4px solid var(--real-gold);
         }
 
         .p-box { 
             border-left: 1px solid rgba(212, 175, 55, 0.3); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; position: relative;
+            align-items: center; justify-content: center; 
         }
         
         .p-box.active { 
-            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.1), transparent);
+            background: rgba(212, 175, 55, 0.15);
             border-top: 10px solid var(--real-gold);
         }
 
         .p-box .name { font-size: 2rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
 
-        /* تأثير الذهب الملكي 3D */
+        /* الأرقام الذهبية الملكية 3D */
         .p-box .time { 
-            font-size: 3.5rem; /* تكبير الحجم */
+            font-size: 3.5rem; 
             font-weight: 900; 
             background: var(--gold-3d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 4px 2px rgba(0,0,0,0.8)); /* ظل للبروز */
-            position: relative;
+            filter: drop-shadow(2px 4px 3px rgba(0,0,0,1));
         }
     </style>
 </head>
@@ -105,7 +99,7 @@
                 <div id="ampm">--</div>
                 <div style="color:#fff; font-size:1.8rem; border-top:1px solid var(--real-gold); padding-top:20px; width:80%; text-align:center;">
                     الصلاة القادمة: <br>
-                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem; text-shadow: 2px 2px 5px #000;">--</span>
+                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem;">--</span>
                 </div>
             </div>
 
