@@ -12,24 +12,19 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            /* صورة المسجد النبوي كخلفية كاملة */
-            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat fixed;
+            /* خلفية المسجد النبوي كاملة وواضحة بدون أي تعتيم */
+            background: url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat fixed;
             color: #fff; font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
         }
 
-        /* طبقة تظليل فوق الصورة لضمان وضوح الكتابة */
-        .overlay { 
-            position: absolute; inset: 0; 
-            background: rgba(0, 0, 0, 0.65); 
-            z-index: 1; 
-        }
+        /* تم إزالة طبقة الـ overlay الداكنة هنا */
 
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
         .top-bar { 
-            background: rgba(0, 0, 0, 0.8); display: flex; justify-content: space-between; 
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: space-between; 
             padding: 15px 50px; border-bottom: 3px solid var(--real-gold); font-size: 2rem; font-weight: bold;
-            color: var(--real-gold);
+            color: var(--real-gold); text-shadow: 2px 2px 4px #000;
         }
 
         .main-content { 
@@ -37,28 +32,31 @@
             padding: 30px; flex: 1; align-items: stretch;
         }
 
+        /* جعل اللوحات نصف شفافة لتظهر الخلفية من خلفها */
         .left-panel { 
-            background: rgba(0, 0, 0, 0.7); border: 2px solid var(--real-gold); 
+            background: rgba(0, 0, 0, 0.4); border: 2px solid var(--real-gold); 
             border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px); /* تعتيم خفيف جداً خلف النص فقط لضمان الوضوح */
         }
 
-        #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 3px 3px 10px rgba(0,0,0,1); }
-        #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; }
+        #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 5px 5px 15px rgba(0,0,0,1); }
+        #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; text-shadow: 2px 2px 8px #000; }
 
         .center-panel { 
-            background: rgba(0, 0, 0, 0.5); border-radius: 40px; border: 4px solid var(--real-gold); 
+            background: rgba(0, 0, 0, 0.3); border-radius: 40px; border: 4px solid var(--real-gold); 
             display: flex; align-items: center; justify-content: center; padding: 40px; text-align: center;
+            backdrop-filter: blur(3px);
         }
         
         #zikr-text { 
             font-size: 4.5rem; font-weight: 900; line-height: 1.5; color: var(--real-gold);
-            text-shadow: 4px 4px 15px rgba(0,0,0,1);
+            text-shadow: 4px 4px 15px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,0.8);
         }
 
-        /* شريط المواقيت السفلي الأسود الملكي مع شفافية بسيطة */
+        /* شريط المواقيت السفلي شفاف ليظهر جمال الصورة */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 220px; background: rgba(0, 0, 0, 0.85); border-top: 4px solid var(--real-gold);
+            height: 220px; background: rgba(0, 0, 0, 0.7); border-top: 4px solid var(--real-gold);
         }
 
         .p-box { 
@@ -67,44 +65,43 @@
         }
         
         .p-box.active { 
-            background: rgba(212, 175, 55, 0.15);
+            background: rgba(212, 175, 55, 0.25);
             border-top: 10px solid var(--real-gold);
         }
 
-        .p-box .name { font-size: 2rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
+        .p-box .name { font-size: 2rem; color: #fff; margin-bottom: 10px; font-weight: bold; text-shadow: 2px 2px 4px #000; }
 
-        /* الأرقام الذهبية الملكية 3D */
+        /* الأرقام الذهبية الملكية 3D مع ظل قوي جداً */
         .p-box .time { 
             font-size: 3.5rem; 
             font-weight: 900; 
             background: var(--gold-3d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(2px 4px 3px rgba(0,0,0,1));
+            filter: drop-shadow(4px 4px 5px rgba(0,0,0,1));
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
     <div class="wrapper">
         <div class="top-bar">
-            <div id="en-date">Loading...</div>
-            <div style="font-size: 2.5rem; text-shadow: 2px 2px 5px #000;">جامع الأمير فواز - جدة</div>
-            <div id="ar-date">Loading...</div>
+            <div id="en-date">--</div>
+            <div style="font-size: 2.5rem; text-shadow: 3px 3px 6px #000;">جامع الأمير فواز - جدة</div>
+            <div id="ar-date">--</div>
         </div>
 
         <div class="main-content">
             <div class="left-panel">
                 <div id="digi-time">00:00</div>
                 <div id="ampm">--</div>
-                <div style="color:#fff; font-size:1.8rem; border-top:1px solid var(--real-gold); padding-top:20px; width:80%; text-align:center;">
+                <div style="color:#fff; font-size:1.8rem; border-top:1px solid var(--real-gold); padding-top:20px; width:80%; text-align:center; text-shadow: 2px 2px 4px #000;">
                     الصلاة القادمة: <br>
-                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem;">--</span>
+                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem; text-shadow: 3px 3px 6px #000;">--</span>
                 </div>
             </div>
 
             <div class="center-panel">
-                <div id="zikr-text">جاري التحميل...</div>
+                <div id="zikr-text">سبحان الله وبحمده</div>
             </div>
         </div>
 
