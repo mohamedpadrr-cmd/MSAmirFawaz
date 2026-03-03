@@ -6,8 +6,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --gold: #d4af37; /* لون ذهبي أساسي */
-            --light-gold: #f1d592; /* ذهبي فاتح للكتابة */
+            --gold: #d4af37; 
+            --dark-gold: #b8860b;
+            --light-gold: #f1d592;
             --islamic-pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,7 +26,6 @@
 
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
-        /* الشريط العلوي */
         .top-bar { 
             background: rgba(0, 0, 0, 0.9); display: flex; justify-content: space-between; 
             padding: 15px 50px; border-bottom: 2px solid var(--gold); font-size: 1.8rem; font-weight: bold;
@@ -37,7 +37,6 @@
             padding: 30px; flex: 1; align-items: stretch;
         }
 
-        /* صندوق الساعة الذهبي */
         .left-panel { 
             background: rgba(20, 40, 40, 0.8); border: 2px solid var(--gold); 
             border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -47,16 +46,22 @@
         #digi-time { font-size: 8rem; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
         #ampm { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
 
-        /* لوحة الأذكار */
+        /* لوحة الأذكار - تم تعديل لون الكتابة هنا للذهبي */
         .center-panel { 
             background: rgba(255, 255, 255, 0.96); border-radius: 30px; 
             border: 6px solid var(--gold); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; padding: 60px; text-align: center; color: #1a3333;
+            align-items: center; justify-content: center; padding: 60px; text-align: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
         }
         
-        #zikr-text { font-size: 3.5rem; font-weight: 900; line-height: 1.6; color: #1a3333; }
+        #zikr-text { 
+            font-size: 3.8rem; 
+            font-weight: 900; 
+            line-height: 1.6; 
+            color: var(--dark-gold); /* لون ذهبي غامق للأذكار */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* ظل خفيف للوضوح */
+        }
 
-        /* شريط المواقيت السفلي */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
             height: 180px; background: rgba(0, 20, 20, 0.95); border-top: 3px solid var(--gold);
@@ -112,7 +117,6 @@
 
     function updateDashboard() {
         const now = new Date();
-        
         let h = now.getHours();
         const m = String(now.getMinutes()).padStart(2, '0');
         document.getElementById('digi-time').innerText = `${h % 12 || 12}:${m}`;
@@ -146,13 +150,14 @@
         "«سبحان الله وبحمده، سبحان الله العظيم»",
         "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
         "«اللهم صلِ وسلم على نبينا محمد»",
-        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»"
+        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»",
+        "«لا حول ولا قوة إلا بالله العلي العظيم»"
     ];
     let zIdx = 0;
     setInterval(() => {
         zIdx = (zIdx + 1) % azkar.length;
         document.getElementById('zikr-text').innerText = azkar[zIdx];
-    }, 25000);
+    }, 20000);
 
     setInterval(updateDashboard, 1000);
     updateDashboard();
