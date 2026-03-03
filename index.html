@@ -6,90 +6,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --gold: #d4af37; 
-            --light-gold: #f1d592; 
+            --gold-3d: linear-gradient(to bottom, #f1d592 0%, #d4af37 40%, #b2945e 100%);
+            --real-gold: #d4af37;
             --islamic-pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body { 
-            background: #0c1a1a url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
-            color: var(--light-gold); font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
+            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
+            color: #fff; font-family: 'Tajawal', sans-serif; height: 100vh; overflow: hidden;
         }
 
         .overlay { 
             position: absolute; inset: 0; 
-            background: linear-gradient(rgba(12, 26, 26, 0.85), rgba(12, 26, 26, 0.95)), var(--islamic-pattern); 
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.95)), var(--islamic-pattern); 
             z-index: 1; 
         }
 
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
         .top-bar { 
-            background: rgba(0, 0, 0, 0.9); display: flex; justify-content: space-between; 
-            padding: 15px 50px; border-bottom: 2px solid var(--gold); font-size: 1.8rem; font-weight: bold;
-            color: var(--gold);
+            background: rgba(0, 0, 0, 0.95); display: flex; justify-content: space-between; 
+            padding: 15px 50px; border-bottom: 3px solid var(--real-gold); font-size: 2rem; font-weight: bold;
+            color: var(--real-gold);
         }
 
         .main-content { 
-            display: grid; grid-template-columns: 380px 1fr; gap: 30px; 
+            display: grid; grid-template-columns: 420px 1fr; gap: 30px; 
             padding: 30px; flex: 1; align-items: stretch;
         }
 
         .left-panel { 
-            background: rgba(20, 40, 40, 0.8); border: 2px solid var(--gold); 
-            border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            background: rgba(15, 15, 15, 0.9); border: 2px solid var(--real-gold); 
+            border-radius: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
-        #digi-time { font-size: 8rem; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
-        #ampm { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+        #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 3px 3px 10px rgba(0,0,0,1); }
+        #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; }
 
         .center-panel { 
-            background: #111 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
-            border-radius: 30px; 
-            border: 6px solid var(--gold); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; padding: 60px; text-align: center;
-            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9);
+            background: #000 url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat;
+            border-radius: 40px; border: 8px solid var(--real-gold); 
+            display: flex; align-items: center; justify-content: center; padding: 60px; text-align: center;
             position: relative; overflow: hidden;
         }
 
-        .center-panel::after {
-            content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.55); z-index: 1;
-        }
+        .center-panel::after { content: ''; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1; }
         
         #zikr-text { 
-            font-size: 3.8rem; font-weight: 900; line-height: 1.6; color: var(--gold);
-            text-shadow: 3px 3px 12px rgba(0,0,0,1); z-index: 2; position: relative;
+            font-size: 4.5rem; font-weight: 900; line-height: 1.5; color: var(--real-gold);
+            text-shadow: 4px 4px 15px rgba(0,0,0,1); z-index: 2; position: relative;
         }
 
-        /* شريط المواقيت السفلي مع خلفية سماء */
+        /* شريط المواقيت السفلي الأسود الملكي */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 180px; 
-            background: url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?q=80&w=2000') center/cover no-repeat;
-            border-top: 3px solid var(--gold);
-            position: relative;
-        }
-
-        /* طبقة تفتيح خفيفة فوق السماء لزيادة وضوح النص الأسود */
-        .bottom-grid::before {
-            content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.3); z-index: 1;
+            height: 220px; background: #000; border-top: 4px solid var(--real-gold);
+            box-shadow: 0 -10px 40px rgba(0,0,0,1);
         }
 
         .p-box { 
-            position: relative; z-index: 2;
-            border-left: 1px solid rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; 
+            border-left: 1px solid rgba(212, 175, 55, 0.3); display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; position: relative;
         }
         
         .p-box.active { 
-            background: rgba(212, 175, 55, 0.6); 
-            border-top: 10px solid #000; 
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.1), transparent);
+            border-top: 10px solid var(--real-gold);
         }
 
-        .p-box .name { font-size: 1.8rem; color: #000; margin-bottom: 5px; font-weight: 900; }
-        .p-box .time { font-size: 2.5rem; font-weight: 900; color: #000; text-shadow: 0px 0px 1px rgba(255,255,255,0.5); } 
+        .p-box .name { font-size: 2rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
+
+        /* تأثير الذهب الملكي 3D */
+        .p-box .time { 
+            font-size: 3.5rem; /* تكبير الحجم */
+            font-weight: 900; 
+            background: var(--gold-3d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 4px 2px rgba(0,0,0,0.8)); /* ظل للبروز */
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -97,22 +95,22 @@
     <div class="wrapper">
         <div class="top-bar">
             <div id="en-date">Loading...</div>
-            <div style="color:var(--gold); font-size: 2.2rem;">جامع الأمير فواز - جدة</div>
-            <div id="ar-date">جاري التحميل...</div>
+            <div style="font-size: 2.5rem; text-shadow: 2px 2px 5px #000;">جامع الأمير فواز - جدة</div>
+            <div id="ar-date">Loading...</div>
         </div>
 
         <div class="main-content">
             <div class="left-panel">
                 <div id="digi-time">00:00</div>
                 <div id="ampm">--</div>
-                <div style="color:var(--gold); font-size:1.6rem; border-top:1px solid rgba(212, 175, 55, 0.3); padding-top:15px; width:80%; text-align:center;">
+                <div style="color:#fff; font-size:1.8rem; border-top:1px solid var(--real-gold); padding-top:20px; width:80%; text-align:center;">
                     الصلاة القادمة: <br>
-                    <span id="next-prayer-name" style="color:var(--light-gold); font-weight:bold; font-size:2.2rem;">--</span>
+                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem; text-shadow: 2px 2px 5px #000;">--</span>
                 </div>
             </div>
 
             <div class="center-panel">
-                <div id="zikr-text">جاري تحميل الأذكار...</div>
+                <div id="zikr-text">جاري التحميل...</div>
             </div>
         </div>
 
@@ -171,9 +169,8 @@
         document.getElementById('zikr-text').innerText = azkar[zIdx];
         zIdx = (zIdx + 1) % azkar.length;
     }
-
     cycleZikr();
-    setInterval(cycleZikr, 25000);
+    setInterval(cycleZikr, 20000);
     setInterval(updateDashboard, 1000);
     updateDashboard();
 </script>
