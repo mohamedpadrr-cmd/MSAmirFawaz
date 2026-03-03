@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --gold: #d4af37; /* ذهبي ملكي */
+            --gold: #d4af37; 
             --light-gold: #f1d592; 
             --islamic-pattern: url('https://www.transparenttextures.com/patterns/islamic-art.png');
         }
@@ -45,22 +45,23 @@
         #digi-time { font-size: 8rem; font-weight: 900; color: var(--gold); line-height: 1; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
         #ampm { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
 
-        /* لوحة الأذكار - تم تغيير الخلفية لصورة الكعبة وتعديل لون النص ليكون واضحاً */
+        /* لوحة الأذكار - خلفية الكعبة */
         .center-panel { 
-            background: #000 url('https://mohamedpadrr-cmd.github.io/MSAmirFawaz/static/media/bg.c5485458156157e1df23.jpg') center/cover no-repeat;
+            /* تم تحديث الرابط هنا لرابط مباشر ومستقر */
+            background: #000 url('https://images.unsplash.com/photo-1564769625805-40c7439154b9?q=80&w=2000') center/cover no-repeat;
             border-radius: 30px; 
             border: 6px solid var(--gold); display: flex; flex-direction: column; 
             align-items: center; justify-content: center; padding: 60px; text-align: center;
-            box-shadow: inset 0 0 30px rgba(212, 175, 55, 0.1);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
             position: relative; overflow: hidden;
         }
 
-        /* طبقة تظليل فوق صورة الكعبة لضمان وضوح النص الذهبي */
-        .center-panel::before {
+        /* طبقة التعتيم لضمان وضوح النص الذهبي */
+        .center-panel::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6); /* تظليل داكن بنسبة 60% */
+            background: rgba(0, 0, 0, 0.5); 
             z-index: 1;
         }
         
@@ -69,8 +70,8 @@
             font-weight: 900; 
             line-height: 1.6; 
             color: var(--gold);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* ظل داكن لزيادة وضوح النص الذهبي */
-            z-index: 2; /* النص فوق طبقة التظليل */
+            text-shadow: 2px 2px 10px rgba(0,0,0,1); 
+            z-index: 2; 
             position: relative;
         }
 
@@ -110,7 +111,7 @@
             </div>
 
             <div class="center-panel">
-                <div id="zikr-text">«سبحان الله وبحمده، سبحان الله العظيم»</div>
+                <div id="zikr-text">جاري تحميل الأذكار...</div>
             </div>
         </div>
 
@@ -129,7 +130,6 @@
 
     function updateDashboard() {
         const now = new Date();
-        
         let h = now.getHours();
         const m = String(now.getMinutes()).padStart(2, '0');
         document.getElementById('digi-time').innerText = `${h % 12 || 12}:${m}`;
@@ -163,14 +163,17 @@
         "«سبحان الله وبحمده، سبحان الله العظيم»",
         "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
         "«اللهم صلِ وسلم على نبينا محمد»",
-        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»"
+        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»",
+        "«أستغفر الله العظيم وأتوب إليه»"
     ];
     let zIdx = 0;
-    setInterval(() => {
-        zIdx = (zIdx + 1) % azkar.length;
+    function cycleZikr() {
         document.getElementById('zikr-text').innerText = azkar[zIdx];
-    }, 25000);
+        zIdx = (zIdx + 1) % azkar.length;
+    }
 
+    cycleZikr();
+    setInterval(cycleZikr, 20000);
     setInterval(updateDashboard, 1000);
     updateDashboard();
 </script>
