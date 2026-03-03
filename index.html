@@ -19,74 +19,75 @@
         .wrapper { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
 
         .top-bar { 
-            background: rgba(0, 0, 0, 0.5); display: flex; justify-content: space-between; 
-            padding: 15px 50px; border-bottom: 2px solid var(--real-gold); font-size: 2rem; font-weight: bold;
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: space-between; 
+            padding: 10px 50px; border-bottom: 2px solid var(--real-gold); font-size: 1.8rem; font-weight: bold;
             color: var(--real-gold); text-shadow: 2px 2px 4px #000;
         }
 
         .main-content { 
-            display: grid; grid-template-columns: 420px 1fr; gap: 30px; 
-            padding: 30px; flex: 1; align-items: center; /* توسيط المحتوى عمودياً */
+            display: grid; grid-template-columns: 400px 1fr; gap: 20px; 
+            padding: 20px; flex: 1; align-items: center;
         }
 
-        /* لوحة الساعة الجانبية - شفافة جداً */
         .left-panel { 
-            background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(212, 175, 55, 0.5); 
-            border-radius: 25px; display: flex; flex-direction: column; align-items: center; 
-            justify-content: center; height: 100%; backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.4); 
+            border-radius: 20px; display: flex; flex-direction: column; align-items: center; 
+            justify-content: center; height: 80%; backdrop-filter: blur(8px);
         }
 
-        #digi-time { font-size: 9rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 5px 5px 15px rgba(0,0,0,1); }
-        #ampm { font-size: 3rem; color: var(--real-gold); margin-bottom: 20px; text-shadow: 2px 2px 8px #000; }
+        #digi-time { font-size: 8rem; font-weight: 900; color: var(--real-gold); line-height: 1; text-shadow: 4px 4px 10px #000; }
+        #ampm { font-size: 2.5rem; color: var(--real-gold); margin-bottom: 15px; }
 
-        /* منطقة الأذكار - كتابة فقط في الهواء */
-        .center-panel { 
-            background: none; /* إزالة الخلفية */
-            border: none;     /* إزالة الحدود */
-            display: flex; align-items: center; justify-content: center; 
-            padding: 20px; text-align: center;
-        }
-        
+        /* الأذكار بحجم أصغر وعائمة */
+        .center-panel { background: none; border: none; text-align: center; padding: 10px; }
         #zikr-text { 
-            font-size: 5rem; /* حجم أكبر للكتابة العائمة */
-            font-weight: 900; 
-            line-height: 1.4; 
-            color: var(--real-gold);
-            /* ظل أسود قوي لجعل الكتابة تبرز بوضوح فوق أي خلفية */
-            text-shadow: 
-                4px 4px 10px rgba(0,0,0,1), 
-                -4px -4px 10px rgba(0,0,0,1),
-                0 0 25px rgba(0,0,0,0.8);
-            position: relative;
+            font-size: 3rem; /* تصغير الحجم */
+            font-weight: 800; 
+            color: #fff; 
+            text-shadow: 2px 2px 10px #000, 0 0 20px rgba(212, 175, 55, 0.3);
+            line-height: 1.4;
         }
 
-        /* شريط المواقيت السفلي */
+        /* شريط المواقيت السفلي المكبر */
         .bottom-grid { 
             display: grid; grid-template-columns: repeat(6, 1fr); 
-            height: 200px; background: rgba(0, 0, 0, 0.6); border-top: 3px solid var(--real-gold);
-            backdrop-filter: blur(10px);
+            height: 280px; /* تكبير الشريط السفلي */
+            background: rgba(0, 0, 0, 0.85); 
+            border-top: 5px solid var(--real-gold);
+            box-shadow: 0 -15px 50px rgba(0,0,0,1);
         }
 
         .p-box { 
-            border-left: 1px solid rgba(212, 175, 55, 0.2); display: flex; flex-direction: column; 
+            border-left: 1px solid rgba(212, 175, 55, 0.2); 
+            display: flex; flex-direction: column; 
             align-items: center; justify-content: center; 
+            padding: 10px;
         }
         
         .p-box.active { 
-            background: rgba(212, 175, 55, 0.2);
-            border-top: 8px solid var(--real-gold);
+            background: linear-gradient(to bottom, rgba(212, 175, 55, 0.2), transparent);
+            border-top: 12px solid var(--real-gold);
         }
 
-        .p-box .name { font-size: 1.8rem; color: #fff; margin-bottom: 5px; font-weight: bold; text-shadow: 2px 2px 4px #000; }
+        /* أسماء الصلوات وتوقيتها بتأثير 3D ملكي */
+        .p-box .name { 
+            font-size: 2.4rem; /* تكبير الخط */
+            font-weight: 900; 
+            margin-bottom: 15px;
+            background: var(--gold-3d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 3px 2px rgba(0,0,0,1));
+        }
 
-        /* الأرقام الذهبية الملكية 3D */
         .p-box .time { 
-            font-size: 3.5rem; 
+            font-size: 4.2rem; /* تكبير التوقيت */
             font-weight: 900; 
             background: var(--gold-3d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(4px 4px 5px rgba(0,0,0,1));
+            filter: drop-shadow(4px 5px 4px rgba(0,0,0,1));
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -94,7 +95,7 @@
     <div class="wrapper">
         <div class="top-bar">
             <div id="en-date">--</div>
-            <div style="font-size: 2.5rem; text-shadow: 3px 3px 6px #000;">جامع الأمير فواز - جدة</div>
+            <div style="font-size: 2.2rem;">جامع الأمير فواز - جدة</div>
             <div id="ar-date">--</div>
         </div>
 
@@ -102,14 +103,14 @@
             <div class="left-panel">
                 <div id="digi-time">00:00</div>
                 <div id="ampm">--</div>
-                <div style="color:#fff; font-size:1.6rem; border-top:1px solid rgba(212, 175, 55, 0.5); padding-top:20px; width:80%; text-align:center; text-shadow: 2px 2px 4px #000;">
+                <div style="color:#fff; font-size:1.4rem; border-top:1px solid rgba(212, 175, 55, 0.4); padding-top:15px; width:80%; text-align:center;">
                     الصلاة القادمة: <br>
-                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.8rem; text-shadow: 3px 3px 6px #000;">--</span>
+                    <span id="next-prayer-name" style="color:var(--real-gold); font-weight:bold; font-size:2.5rem; text-shadow: 2px 2px 5px #000;">--</span>
                 </div>
             </div>
 
             <div class="center-panel">
-                <div id="zikr-text">جاري تحميل الأذكار...</div>
+                <div id="zikr-text">«سبحان الله وبحمده، سبحان الله العظيم»</div>
             </div>
         </div>
 
@@ -159,10 +160,10 @@
 
     const azkar = [
         "«سبحان الله وبحمده، سبحان الله العظيم»",
-        "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
+        "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد»",
         "«اللهم صلِ وسلم على نبينا محمد»",
-        "«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»",
-        "«أستغفر الله العظيم وأتوب إليه»"
+        "«أستغفر الله العظيم وأتوب إليه»",
+        "«لا حول ولا قوة إلا بالله العلي العظيم»"
     ];
     let zIdx = 0;
     function cycleZikr() {
