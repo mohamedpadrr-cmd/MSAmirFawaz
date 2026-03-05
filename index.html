@@ -41,8 +41,7 @@ font-size:1.4rem;
 font-weight:bold;
 color:var(--real-gold);
 text-shadow:2px 2px 4px #000;
-/* إنزال الشريط العلوي قليلاً */
-margin-top:15px;
+margin-top:15px; /* نزول الشريط العلوي */
 }
 
 .main-content{
@@ -103,8 +102,8 @@ text-shadow:
 .bottom-grid{
 display:grid;
 grid-template-columns:repeat(6,1fr);
-/* زيادة ارتفاع مواقيت الصلاة */
-height:160px;
+/* تقليل طول شريط مواقيت الصلاة */
+height:120px;
 background:rgba(0,0,0,0.6);
 border-top:3px solid var(--real-gold);
 backdrop-filter:blur(10px);
@@ -196,6 +195,7 @@ style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 
 
 <script>
 
+// جدول مواقيت الصلاة
 const prayerSchedule=[
 {n:'الفجر',t:'5:21 ص'},
 {n:'الشروق',t:'6:38 ص'},
@@ -206,83 +206,61 @@ const prayerSchedule=[
 ];
 
 function convertToDate(time){
-
 let parts=time.split(' ');
 let hm=parts[0].split(':');
-
 let h=parseInt(hm[0]);
 let m=parseInt(hm[1]);
-
 if(parts[1]=='م' && h!=12)h+=12;
 if(parts[1]=='ص' && h==12)h=0;
-
 let d=new Date();
 d.setHours(h,m,0,0);
-
 return d;
-
 }
 
 function updateDashboard(){
-
 const now=new Date();
-
 let h=now.getHours();
 let m=now.getMinutes();
-
 document.getElementById('digi-time').innerText=`${h%12||12}:${String(m).padStart(2,'0')}`;
 document.getElementById('ampm').innerText=h>=12?'مساءً':'صباحاً';
-
 document.getElementById('en-date').innerText=
 now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-
 document.getElementById('ar-date').innerText=
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',
 {day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(now);
 
 let nextIndex=0;
 let targetTime;
-
 for(let i=0;i<prayerSchedule.length;i++){
-
 let t=convertToDate(prayerSchedule[i].t);
-
 if(now<t){
 nextIndex=i;
 targetTime=t;
 break;
 }
-
 if(i==prayerSchedule.length-1){
 nextIndex=0;
 targetTime=convertToDate(prayerSchedule[0].t);
 targetTime.setDate(targetTime.getDate()+1);
 }
-
 }
 
 document.getElementById('next-prayer-name').innerText=prayerSchedule[nextIndex].n;
 
 let diff=(targetTime-now)/1000;
-
 let hours=Math.floor(diff/3600);
 let minutes=Math.floor((diff%3600)/60);
 let seconds=Math.floor(diff%60);
-
 document.getElementById('countdown').innerText=
 `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
 
 const grid=document.getElementById('prayer-list');
-
 grid.innerHTML=prayerSchedule.map((p,index)=>`
-
 <div class="p-box ${index===nextIndex?'active':''}">
 <div class="name">${p.n}</div>
 <div class="time">${p.t}</div>
 </div>
-
 `).join('');
-
 }
 
 // 50 ذكر للشاشة
