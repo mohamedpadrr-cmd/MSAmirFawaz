@@ -90,7 +90,7 @@ text-align:center;
 }
 
 #zikr-text{
-font-size:3.2rem;
+font-size:2.6rem;
 font-weight:900;
 line-height:1.4;
 color:var(--real-gold);
@@ -99,8 +99,6 @@ text-shadow:
 4px 4px 10px rgba(0,0,0,1),
 -4px -4px 10px rgba(0,0,0,1),
 0 0 25px rgba(0,0,0,0.8);
-
-position:relative;
 }
 
 .bottom-grid{
@@ -136,12 +134,17 @@ text-shadow:2px 2px 4px #000;
 .p-box .time{
 font-size:2.4rem;
 font-weight:900;
-
 background:var(--gold-3d);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-
 filter:drop-shadow(4px 4px 5px rgba(0,0,0,1));
+}
+
+#countdown{
+margin-top:10px;
+font-size:1.8rem;
+color:#fff;
+text-shadow:2px 2px 5px #000;
 }
 
 </style>
@@ -174,6 +177,8 @@ style="color:var(--real-gold);font-weight:bold;font-size:2rem;text-shadow:3px 3p
 --
 </span>
 
+<div id="countdown">--:--</div>
+
 </div>
 
 </div>
@@ -199,14 +204,28 @@ const prayerSchedule=[
 {n:'العشاء',t:'7:54 م'}
 ];
 
+function convertToMinutes(time){
+
+let parts=time.split(' ');
+let hm=parts[0].split(':');
+
+let h=parseInt(hm[0]);
+let m=parseInt(hm[1]);
+
+if(parts[1]=='م' && h!=12)h+=12;
+if(parts[1]=='ص' && h==12)h=0;
+
+return h*60+m;
+
+}
+
 function updateDashboard(){
 
 const now=new Date();
-
 let h=now.getHours();
-const m=String(now.getMinutes()).padStart(2,'0');
+let m=now.getMinutes();
 
-document.getElementById('digi-time').innerText=`${h%12||12}:${m}`;
+document.getElementById('digi-time').innerText=`${h%12||12}:${String(m).padStart(2,'0')}`;
 document.getElementById('ampm').innerText=h>=12?'مساءً':'صباحاً';
 
 document.getElementById('en-date').innerText=
@@ -216,19 +235,31 @@ document.getElementById('ar-date').innerText=
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',
 {day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(now);
 
-const currentMinutes=h*60+now.getMinutes();
+let nowMin=h*60+m;
 
 let nextIndex=0;
 
-if(currentMinutes>(19*60+54))nextIndex=0;
-else if(currentMinutes>(18*60+24))nextIndex=5;
-else if(currentMinutes>(15*60+52))nextIndex=4;
-else if(currentMinutes>(12*60+31))nextIndex=3;
-else if(currentMinutes>(6*60+38))nextIndex=2;
-else if(currentMinutes>(5*60+21))nextIndex=1;
-else nextIndex=0;
+for(let i=0;i<prayerSchedule.length;i++){
+if(nowMin<convertToMinutes(prayerSchedule[i].t)){
+nextIndex=i;
+break;
+}
+if(i==prayerSchedule.length-1)nextIndex=0;
+}
 
 document.getElementById('next-prayer-name').innerText=prayerSchedule[nextIndex].n;
+
+let target=convertToMinutes(prayerSchedule[nextIndex].t);
+
+if(nextIndex==0 && nowMin>target) target+=1440;
+
+let diff=target-nowMin;
+
+let hours=Math.floor(diff/60);
+let mins=diff%60;
+
+document.getElementById('countdown').innerText=
+`متبقي ${hours}:${String(mins).padStart(2,'0')}`;
 
 const grid=document.getElementById('prayer-list');
 
