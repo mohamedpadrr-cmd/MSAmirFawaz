@@ -35,9 +35,9 @@ flex-direction:column;
 background:rgba(0,0,0,0.5);
 display:flex;
 justify-content:space-between;
-padding:12px 40px;
+padding:10px 35px;
 border-bottom:2px solid var(--real-gold);
-font-size:1.6rem;
+font-size:1.4rem;
 font-weight:bold;
 color:var(--real-gold);
 text-shadow:2px 2px 4px #000;
@@ -45,9 +45,9 @@ text-shadow:2px 2px 4px #000;
 
 .main-content{
 display:grid;
-grid-template-columns:330px 1fr;
-gap:25px;
-padding:25px;
+grid-template-columns:300px 1fr;
+gap:20px;
+padding:20px;
 flex:1;
 align-items:center;
 }
@@ -65,7 +65,7 @@ backdrop-filter:blur(5px);
 }
 
 #digi-time{
-font-size:6rem;
+font-size:5rem;
 font-weight:900;
 color:var(--real-gold);
 line-height:1;
@@ -73,9 +73,9 @@ text-shadow:5px 5px 15px rgba(0,0,0,1);
 }
 
 #ampm{
-font-size:2rem;
+font-size:1.7rem;
 color:var(--real-gold);
-margin-bottom:15px;
+margin-bottom:12px;
 text-shadow:2px 2px 8px #000;
 }
 
@@ -88,7 +88,7 @@ text-align:center;
 }
 
 #zikr-text{
-font-size:2.6rem;
+font-size:2.2rem;
 font-weight:900;
 line-height:1.4;
 color:var(--real-gold);
@@ -101,7 +101,7 @@ text-shadow:
 .bottom-grid{
 display:grid;
 grid-template-columns:repeat(6,1fr);
-height:150px;
+height:130px;
 background:rgba(0,0,0,0.6);
 border-top:3px solid var(--real-gold);
 backdrop-filter:blur(10px);
@@ -121,15 +121,15 @@ border-top:8px solid var(--real-gold);
 }
 
 .p-box .name{
-font-size:1.3rem;
+font-size:1.1rem;
 color:#fff;
-margin-bottom:5px;
+margin-bottom:4px;
 font-weight:bold;
 text-shadow:2px 2px 4px #000;
 }
 
 .p-box .time{
-font-size:2.4rem;
+font-size:2rem;
 font-weight:900;
 background:var(--gold-3d);
 -webkit-background-clip:text;
@@ -138,8 +138,8 @@ filter:drop-shadow(4px 4px 5px rgba(0,0,0,1));
 }
 
 #countdown{
-margin-top:10px;
-font-size:2rem;
+margin-top:8px;
+font-size:1.6rem;
 color:#fff;
 font-weight:bold;
 text-shadow:2px 2px 5px #000;
@@ -154,7 +154,7 @@ text-shadow:2px 2px 5px #000;
 
 <div class="top-bar">
 <div id="en-date">--</div>
-<div style="font-size:2rem;text-shadow:3px 3px 6px #000;">جامع الأمير فواز - جدة</div>
+<div style="font-size:1.7rem;text-shadow:3px 3px 6px #000;">جامع الأمير فواز - جدة</div>
 <div id="ar-date">--</div>
 </div>
 
@@ -165,13 +165,13 @@ text-shadow:2px 2px 5px #000;
 <div id="digi-time">00:00</div>
 <div id="ampm">--</div>
 
-<div style="color:#fff;font-size:1.3rem;border-top:1px solid rgba(212,175,55,0.5);padding-top:15px;width:80%;text-align:center;text-shadow:2px 2px 4px #000;">
+<div style="color:#fff;font-size:1.1rem;border-top:1px solid rgba(212,175,55,0.5);padding-top:12px;width:80%;text-align:center;text-shadow:2px 2px 4px #000;">
 
 الصلاة القادمة:
 <br>
 
 <span id="next-prayer-name"
-style="color:var(--real-gold);font-weight:bold;font-size:2rem;text-shadow:3px 3px 6px #000;">
+style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 3px 6px #000;">
 --
 </span>
 
@@ -226,7 +226,6 @@ const now=new Date();
 
 let h=now.getHours();
 let m=now.getMinutes();
-let s=now.getSeconds();
 
 document.getElementById('digi-time').innerText=`${h%12||12}:${String(m).padStart(2,'0')}`;
 document.getElementById('ampm').innerText=h>=12?'مساءً':'صباحاً';
@@ -294,10 +293,8 @@ const azkar=[
 let zIdx=0;
 
 function cycleZikr(){
-
 document.getElementById('zikr-text').innerText=azkar[zIdx];
 zIdx=(zIdx+1)%azkar.length;
-
 }
 
 cycleZikr();
