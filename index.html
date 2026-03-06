@@ -21,6 +21,19 @@ color:#fff;
 font-family:'Tajawal',sans-serif;
 height:100vh;
 overflow:hidden;
+transition:0.4s;
+}
+
+/* دوران الصفحة */
+
+.rotated{
+transform:rotate(90deg);
+transform-origin:center;
+width:100vh;
+height:100vw;
+position:absolute;
+top:0;
+left:0;
 }
 
 .wrapper{
@@ -213,32 +226,25 @@ style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 
 
 <script>
 
-/* زر التدوير + ملء الشاشة */
+/* زر تدوير التصميم */
 
-let isLandscape=false;
+let rotated=false;
 
-document.getElementById("rotateBtn").addEventListener("click", async ()=>{
+document.getElementById("rotateBtn").onclick=function(){
 
-if(!document.fullscreenElement){
-await document.documentElement.requestFullscreen();
-}
+if(!rotated){
 
-try{
+document.body.classList.add("rotated");
+rotated=true;
 
-if(!isLandscape){
-await screen.orientation.lock("landscape");
-isLandscape=true;
 }else{
-await screen.orientation.lock("portrait");
-isLandscape=false;
+
+document.body.classList.remove("rotated");
+rotated=false;
+
 }
 
-}catch(e){
-alert("الجهاز لا يدعم قفل اتجاه الشاشة");
-}
-
-});
-
+};
 
 const prayerSchedule=[
 {n:'الفجر',t:'5:21 ص'},
@@ -283,76 +289,9 @@ document.getElementById('ar-date').innerText=
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',
 {day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(now);
 
-let nextIndex=0;
-let targetTime;
-
-for(let i=0;i<prayerSchedule.length;i++){
-
-let t=convertToDate(prayerSchedule[i].t);
-
-if(now<t){
-
-nextIndex=i;
-targetTime=t;
-break;
-
 }
 
-if(i==prayerSchedule.length-1){
-
-nextIndex=0;
-targetTime=convertToDate(prayerSchedule[0].t);
-targetTime.setDate(targetTime.getDate()+1);
-
-}
-
-}
-
-document.getElementById('next-prayer-name').innerText=prayerSchedule[nextIndex].n;
-
-let diff=(targetTime-now)/1000;
-
-let hours=Math.floor(diff/3600);
-let minutes=Math.floor((diff%3600)/60);
-let seconds=Math.floor(diff%60);
-
-document.getElementById('countdown').innerText=
-`${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-
-const grid=document.getElementById('prayer-list');
-
-grid.innerHTML=prayerSchedule.map((p,index)=>`
-<div class="p-box ${index===nextIndex?'active':''}">
-<div class="name">${p.n}</div>
-<div class="time">${p.t}</div>
-</div>
-`).join('');
-
-}
-
-const azkar=[
-"«سبحان الله وبحمده، سبحان الله العظيم»",
-"«سبحان الله والحمد لله ولا إله إلا الله والله أكبر»",
-"«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
-"«أستغفر الله العظيم وأتوب إليه»",
-"«اللهم صلِّ وسلم على نبينا محمد»"
-];
-
-let zIdx=0;
-
-function cycleZikr(){
-
-document.getElementById('zikr-text').innerText=azkar[zIdx];
-
-zIdx=(zIdx+1)%azkar.length;
-
-}
-
-cycleZikr();
-
-setInterval(cycleZikr,20000);
 setInterval(updateDashboard,1000);
-
 updateDashboard();
 
 </script>
