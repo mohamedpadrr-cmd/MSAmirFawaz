@@ -213,37 +213,33 @@ style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 
 
 <script>
 
-// قفل الدوران التلقائي
-screen.orientation?.lock("portrait").catch(()=>{});
+/* زر التدوير + ملء الشاشة */
 
-// زر تدوير الشاشة
 let isLandscape=false;
 
-document.getElementById("rotateBtn").addEventListener("click",async ()=>{
+document.getElementById("rotateBtn").addEventListener("click", async ()=>{
+
+if(!document.fullscreenElement){
+await document.documentElement.requestFullscreen();
+}
 
 try{
 
 if(!isLandscape){
-
 await screen.orientation.lock("landscape");
-
 isLandscape=true;
-
 }else{
-
 await screen.orientation.lock("portrait");
-
 isLandscape=false;
-
 }
 
 }catch(e){
-alert("المتصفح يمنع تدوير الشاشة بدون وضع ملء الشاشة");
+alert("الجهاز لا يدعم قفل اتجاه الشاشة");
 }
 
 });
 
-// جدول الصلاة
+
 const prayerSchedule=[
 {n:'الفجر',t:'5:21 ص'},
 {n:'الشروق',t:'6:38 ص'},
@@ -254,18 +250,24 @@ const prayerSchedule=[
 ];
 
 function convertToDate(time){
+
 let parts=time.split(' ');
 let hm=parts[0].split(':');
+
 let h=parseInt(hm[0]);
 let m=parseInt(hm[1]);
+
 if(parts[1]=='م' && h!=12)h+=12;
 if(parts[1]=='ص' && h==12)h=0;
+
 let d=new Date();
 d.setHours(h,m,0,0);
+
 return d;
 }
 
 function updateDashboard(){
+
 const now=new Date();
 
 let h=now.getHours();
@@ -285,17 +287,25 @@ let nextIndex=0;
 let targetTime;
 
 for(let i=0;i<prayerSchedule.length;i++){
+
 let t=convertToDate(prayerSchedule[i].t);
+
 if(now<t){
+
 nextIndex=i;
 targetTime=t;
 break;
+
 }
+
 if(i==prayerSchedule.length-1){
+
 nextIndex=0;
 targetTime=convertToDate(prayerSchedule[0].t);
 targetTime.setDate(targetTime.getDate()+1);
+
 }
+
 }
 
 document.getElementById('next-prayer-name').innerText=prayerSchedule[nextIndex].n;
@@ -320,7 +330,6 @@ grid.innerHTML=prayerSchedule.map((p,index)=>`
 
 }
 
-// الأذكار
 const azkar=[
 "«سبحان الله وبحمده، سبحان الله العظيم»",
 "«سبحان الله والحمد لله ولا إله إلا الله والله أكبر»",
@@ -332,8 +341,11 @@ const azkar=[
 let zIdx=0;
 
 function cycleZikr(){
+
 document.getElementById('zikr-text').innerText=azkar[zIdx];
+
 zIdx=(zIdx+1)%azkar.length;
+
 }
 
 cycleZikr();
