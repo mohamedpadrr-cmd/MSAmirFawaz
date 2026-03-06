@@ -1,300 +1,332 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
-<title>مواقيت الصلاة - جامع الأمير فواز</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شاشة المسجد</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
---gold-3d: linear-gradient(to bottom,#f1d592 0%,#d4af37 40%,#b2945e 100%);
---real-gold:#d4af37;
+--gold:#d4af37;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Tajawal',sans-serif;
+}
 
 body{
-background:url('https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000') center/cover no-repeat fixed;
-color:#fff;
-font-family:'Tajawal',sans-serif;
+
 height:100vh;
-overflow:hidden;
-transition:0.4s;
-}
+width:100vw;
 
-/* دوران الصفحة */
+background:
+linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000") center/cover;
 
-.rotated{
-transform:rotate(90deg);
-transform-origin:center;
-width:100vh;
-height:100vw;
-position:absolute;
-top:0;
-left:0;
-}
+color:white;
 
-.wrapper{
-position:relative;
-z-index:2;
-height:100%;
 display:flex;
 flex-direction:column;
+
 }
 
-.top-bar{
-background:rgba(0,0,0,0.5);
+/* الشريط العلوي */
+
+.top{
+
+height:8vh;
+
 display:flex;
 justify-content:space-between;
-padding:10px 35px;
-border-bottom:2px solid var(--real-gold);
-font-size:1.4rem;
-font-weight:bold;
-color:var(--real-gold);
-text-shadow:2px 2px 4px #000;
-margin-top:15px;
-}
-
-.main-content{
-display:grid;
-grid-template-columns:300px 1fr;
-gap:20px;
-padding:20px;
-flex:1;
 align-items:center;
+
+padding:0 3vw;
+
+border-bottom:2px solid var(--gold);
+
+font-size:2.2vh;
+color:var(--gold);
+font-weight:700;
+
 }
 
-.left-panel{
-background:rgba(0,0,0,0.3);
-border:1px solid rgba(212,175,55,0.5);
-border-radius:25px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-height:100%;
-backdrop-filter:blur(5px);
-}
+/* اسم المسجد */
 
-#digi-time{
-font-size:5rem;
+.mosque{
+
+text-align:center;
+font-size:3.5vh;
 font-weight:900;
-color:var(--real-gold);
-line-height:1;
-text-shadow:5px 5px 15px rgba(0,0,0,1);
+margin-top:1vh;
+
+}
+
+/* الساعة */
+
+.clockBox{
+
+text-align:center;
+
+margin-top:4vh;
+
+}
+
+#clock{
+
+font-size:14vh;
+font-weight:900;
+color:var(--gold);
+
 }
 
 #ampm{
-font-size:1.7rem;
-color:var(--real-gold);
-margin-bottom:12px;
-text-shadow:2px 2px 8px #000;
+
+font-size:4vh;
+
 }
 
-.center-panel{
+/* الصلاة القادمة */
+
+.next{
+
+text-align:center;
+margin-top:2vh;
+
+}
+
+.nextTitle{
+
+font-size:3vh;
+
+}
+
+#nextName{
+
+font-size:5vh;
+color:var(--gold);
+font-weight:900;
+
+}
+
+#countdown{
+
+font-size:4vh;
+margin-top:1vh;
+
+}
+
+/* الأذكار */
+
+.zikr{
+
+flex:1;
+
 display:flex;
 align-items:center;
 justify-content:center;
-padding:20px;
+
 text-align:center;
+
+padding:3vh 3vw;
+
+font-size:4.5vh;
+font-weight:700;
+line-height:1.6;
+
+text-shadow:0 0 20px black;
+
 }
 
-#zikr-text{
-font-size:2.2rem;
-font-weight:900;
-line-height:1.4;
-color:var(--real-gold);
-text-shadow:
-4px 4px 10px rgba(0,0,0,1),
--4px -4px 10px rgba(0,0,0,1),
-0 0 25px rgba(0,0,0,0.8);
-}
+/* جدول الصلوات */
 
-.bottom-grid{
+.prayers{
+
+height:25vh;
+
 display:grid;
-grid-template-columns:repeat(6,1fr);
-height:120px;
-background:rgba(0,0,0,0.6);
-border-top:3px solid var(--real-gold);
-backdrop-filter:blur(10px);
+grid-template-columns:repeat(3,1fr);
+grid-template-rows:repeat(2,1fr);
+
+background:rgba(0,0,0,.75);
+
+border-top:3px solid var(--gold);
+
 }
 
-.p-box{
-border-left:1px solid rgba(212,175,55,0.2);
+.p{
+
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+
+border:1px solid rgba(255,255,255,.15);
+
 }
 
-.p-box.active{
-background:rgba(212,175,55,0.2);
-border-top:8px solid var(--real-gold);
+.p.active{
+
+background:rgba(212,175,55,.25);
+
 }
 
-.p-box .name{
-font-size:1.1rem;
-color:#fff;
-margin-bottom:4px;
-font-weight:bold;
-text-shadow:2px 2px 4px #000;
+.pname{
+
+font-size:3vh;
+
 }
 
-.p-box .time{
-font-size:2rem;
+.ptime{
+
+font-size:5vh;
+color:var(--gold);
 font-weight:900;
-background:var(--gold-3d);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-filter:drop-shadow(4px 4px 5px rgba(0,0,0,1));
-}
 
-#countdown{
-margin-top:8px;
-font-size:1.6rem;
-color:#fff;
-font-weight:bold;
-text-shadow:2px 2px 5px #000;
-}
-
-/* زر التدوير */
-
-#rotateBtn{
-position:fixed;
-bottom:20px;
-left:20px;
-z-index:9999;
-background:rgba(0,0,0,0.7);
-color:#d4af37;
-border:2px solid #d4af37;
-padding:10px 16px;
-font-size:16px;
-border-radius:10px;
-cursor:pointer;
-font-family:'Tajawal';
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="top">
 
-<div class="top-bar">
-<div id="en-date">--</div>
-<div style="font-size:1.7rem;text-shadow:3px 3px 6px #000;">جامع الأمير فواز - جدة</div>
-<div id="ar-date">--</div>
+<div id="hijri"></div>
+
+<div id="miladi"></div>
+
 </div>
 
-<div class="main-content">
+<div class="mosque">
 
-<div class="left-panel">
+جامع الأمير فواز – جدة
 
-<div id="digi-time">00:00</div>
-<div id="ampm">--</div>
+</div>
 
-<div style="color:#fff;font-size:1.1rem;border-top:1px solid rgba(212,175,55,0.5);padding-top:12px;width:80%;text-align:center;text-shadow:2px 2px 4px #000;">
+<div class="clockBox">
 
-الصلاة القادمة:
-<br>
+<div id="clock">00:00</div>
 
-<span id="next-prayer-name"
-style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 3px 6px #000;">
---
-</span>
+<div id="ampm"></div>
+
+</div>
+
+<div class="next">
+
+<div class="nextTitle">الصلاة القادمة</div>
+
+<div id="nextName">--</div>
 
 <div id="countdown">00:00:00</div>
 
 </div>
 
-</div>
+<div class="zikr" id="zikr"></div>
 
-<div class="center-panel">
-<div id="zikr-text"></div>
-</div>
-
-</div>
-
-<div class="bottom-grid" id="prayer-list"></div>
-
-</div>
-
-<button id="rotateBtn">🔄 تدوير الشاشة</button>
+<div class="prayers" id="prayers"></div>
 
 <script>
 
-/* زر تدوير التصميم */
+/* مواقيت الصلاة */
 
-let rotated=false;
-
-document.getElementById("rotateBtn").onclick=function(){
-
-if(!rotated){
-
-document.body.classList.add("rotated");
-rotated=true;
-
-}else{
-
-document.body.classList.remove("rotated");
-rotated=false;
-
-}
-
-};
-
-const prayerSchedule=[
-{n:'الفجر',t:'5:21 ص'},
-{n:'الشروق',t:'6:38 ص'},
-{n:'الظهر',t:'12:31 م'},
-{n:'العصر',t:'3:52 م'},
-{n:'المغرب',t:'6:24 م'},
-{n:'العشاء',t:'7:54 م'}
+const prayerTimes=[
+{name:"الفجر",time:"05:21"},
+{name:"الشروق",time:"06:38"},
+{name:"الظهر",time:"12:31"},
+{name:"العصر",time:"15:52"},
+{name:"المغرب",time:"18:24"},
+{name:"العشاء",time:"19:54"}
 ];
 
-function convertToDate(time){
+/* إنشاء الجدول */
 
-let parts=time.split(' ');
-let hm=parts[0].split(':');
+const prayersBox=document.getElementById("prayers");
 
-let h=parseInt(hm[0]);
-let m=parseInt(hm[1]);
+prayerTimes.forEach(p=>{
 
-if(parts[1]=='م' && h!=12)h+=12;
-if(parts[1]=='ص' && h==12)h=0;
+let div=document.createElement("div");
 
-let d=new Date();
-d.setHours(h,m,0,0);
+div.className="p";
 
-return d;
-}
+div.innerHTML=
+"<div class='pname'>"+p.name+"</div>"+
+"<div class='ptime'>"+p.time+"</div>";
 
-function updateDashboard(){
+prayersBox.appendChild(div);
 
-const now=new Date();
+});
+
+/* الساعة والتاريخ */
+
+function updateClock(){
+
+let now=new Date();
 
 let h=now.getHours();
 let m=now.getMinutes();
 
-document.getElementById('digi-time').innerText=`${h%12||12}:${String(m).padStart(2,'0')}`;
-document.getElementById('ampm').innerText=h>=12?'مساءً':'صباحاً';
+let ampm=h>=12?"مساءً":"صباحاً";
 
-document.getElementById('en-date').innerText=
-now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+let h12=h%12||12;
 
-document.getElementById('ar-date').innerText=
-new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',
-{day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(now);
+document.getElementById("clock").innerText=
+h12+":"+String(m).padStart(2,"0");
+
+document.getElementById("ampm").innerText=ampm;
+
+document.getElementById("miladi").innerText=
+now.toLocaleDateString("en",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+
+document.getElementById("hijri").innerText=
+new Intl.DateTimeFormat("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric",weekday:"long"}).format(now);
 
 }
 
-setInterval(updateDashboard,1000);
-updateDashboard();
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* الأذكار */
+
+const azkar=[
+
+"سبحان الله وبحمده سبحان الله العظيم",
+
+"لا إله إلا الله وحده لا شريك له له الملك وله الحمد",
+
+"أستغفر الله العظيم وأتوب إليه",
+
+"اللهم صل وسلم على نبينا محمد",
+
+"سبحان الله والحمد لله والله أكبر"
+
+];
+
+let zi=0;
+
+function changeZikr(){
+
+document.getElementById("zikr").innerText=azkar[zi];
+
+zi=(zi+1)%azkar.length;
+
+}
+
+changeZikr();
+
+setInterval(changeZikr,20000);
 
 </script>
 
 </body>
+
 </html>
