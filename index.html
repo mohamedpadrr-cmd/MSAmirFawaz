@@ -41,7 +41,7 @@ font-size:1.4rem;
 font-weight:bold;
 color:var(--real-gold);
 text-shadow:2px 2px 4px #000;
-margin-top:15px; /* نزول الشريط العلوي */
+margin-top:15px;
 }
 
 .main-content{
@@ -102,7 +102,6 @@ text-shadow:
 .bottom-grid{
 display:grid;
 grid-template-columns:repeat(6,1fr);
-/* تقليل طول شريط مواقيت الصلاة */
 height:120px;
 background:rgba(0,0,0,0.6);
 border-top:3px solid var(--real-gold);
@@ -145,6 +144,23 @@ font-size:1.6rem;
 color:#fff;
 font-weight:bold;
 text-shadow:2px 2px 5px #000;
+}
+
+/* زر التدوير */
+
+#rotateBtn{
+position:fixed;
+bottom:20px;
+left:20px;
+z-index:9999;
+background:rgba(0,0,0,0.7);
+color:#d4af37;
+border:2px solid #d4af37;
+padding:10px 16px;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
+font-family:'Tajawal';
 }
 
 </style>
@@ -193,9 +209,41 @@ style="color:var(--real-gold);font-weight:bold;font-size:1.7rem;text-shadow:3px 
 
 </div>
 
+<button id="rotateBtn">🔄 تدوير الشاشة</button>
+
 <script>
 
-// جدول مواقيت الصلاة
+// قفل الدوران التلقائي
+screen.orientation?.lock("portrait").catch(()=>{});
+
+// زر تدوير الشاشة
+let isLandscape=false;
+
+document.getElementById("rotateBtn").addEventListener("click",async ()=>{
+
+try{
+
+if(!isLandscape){
+
+await screen.orientation.lock("landscape");
+
+isLandscape=true;
+
+}else{
+
+await screen.orientation.lock("portrait");
+
+isLandscape=false;
+
+}
+
+}catch(e){
+alert("المتصفح يمنع تدوير الشاشة بدون وضع ملء الشاشة");
+}
+
+});
+
+// جدول الصلاة
 const prayerSchedule=[
 {n:'الفجر',t:'5:21 ص'},
 {n:'الشروق',t:'6:38 ص'},
@@ -219,18 +267,23 @@ return d;
 
 function updateDashboard(){
 const now=new Date();
+
 let h=now.getHours();
 let m=now.getMinutes();
+
 document.getElementById('digi-time').innerText=`${h%12||12}:${String(m).padStart(2,'0')}`;
 document.getElementById('ampm').innerText=h>=12?'مساءً':'صباحاً';
+
 document.getElementById('en-date').innerText=
 now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
 document.getElementById('ar-date').innerText=
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura',
 {day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(now);
 
 let nextIndex=0;
 let targetTime;
+
 for(let i=0;i<prayerSchedule.length;i++){
 let t=convertToDate(prayerSchedule[i].t);
 if(now<t){
@@ -248,72 +301,32 @@ targetTime.setDate(targetTime.getDate()+1);
 document.getElementById('next-prayer-name').innerText=prayerSchedule[nextIndex].n;
 
 let diff=(targetTime-now)/1000;
+
 let hours=Math.floor(diff/3600);
 let minutes=Math.floor((diff%3600)/60);
 let seconds=Math.floor(diff%60);
+
 document.getElementById('countdown').innerText=
 `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
 
 const grid=document.getElementById('prayer-list');
+
 grid.innerHTML=prayerSchedule.map((p,index)=>`
 <div class="p-box ${index===nextIndex?'active':''}">
 <div class="name">${p.n}</div>
 <div class="time">${p.t}</div>
 </div>
 `).join('');
+
 }
 
-// 50 ذكر للشاشة
+// الأذكار
 const azkar=[
 "«سبحان الله وبحمده، سبحان الله العظيم»",
 "«سبحان الله والحمد لله ولا إله إلا الله والله أكبر»",
 "«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»",
 "«أستغفر الله العظيم وأتوب إليه»",
-"«اللهم صلِّ وسلم على نبينا محمد»",
-"«اللهم أعنا على ذكرك وشكرك وحسن عبادتك»",
-"«اللهم اغفر لي ولوالديَّ وارحمهما كما ربياني صغيرًا»",
-"«اللهم اغفر للمؤمنين والمؤمنات الأحياء منهم والأموات»",
-"«اللهم إنا نسألك الهدى والتقى والعفاف والغنى»",
-"«اللهم اغفر لنا وارحمنا واهدنا وعافنا وارزقنا»",
-"«رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ»",
-"«رَبِّ زِدْنِي عِلْمًا»",
-"«رَبِّ اشْرَحْ لِي صَدْرِي»",
-"«اللهم إني أسألك الجنة وأعوذ بك من النار»",
-"«اللهم تقبل منا إنك أنت السميع العليم»",
-"«اللهم إنك عفو كريم تحب العفو فاعف عنا»",
-"«اللهم اجعل القرآن ربيع قلوبنا»",
-"«اللهم ثبت قلوبنا على دينك»",
-"«اللهم ارزقنا الإخلاص في القول والعمل»",
-"«اللهم اجعلنا من الذاكرين الشاكرين»",
-"«اللهم أصلح لنا ديننا الذي هو عصمة أمرنا»",
-"«اللهم بارك لنا في أوقاتنا وأعمالنا»",
-"«اللهم اغفر لنا ولوالدينا ولجميع المسلمين»",
-"«اللهم ارزقنا حسن الخاتمة»",
-"«اللهم صلِّ وسلم وبارك على نبينا محمد»",
-"«اللهم اهدنا واهد بنا واجعلنا سببًا لمن اهتدى»",
-"«اللهم اجعلنا من أهل القرآن»",
-"«اللهم احفظ بلاد المسلمين»",
-"«اللهم اجعل هذا البلد آمنًا مطمئنًا»",
-"«اللهم اكفنا بحلالك عن حرامك»",
-"«اللهم اغننا بفضلك عمن سواك»",
-"«اللهم فرّج همّ المهمومين»",
-"«اللهم نفّس كرب المكروبين»",
-"«اللهم اقضِ الدين عن المدينين»",
-"«اللهم اشفِ مرضانا ومرضى المسلمين»",
-"«اللهم ارحم موتانا وموتى المسلمين»",
-"«اللهم ارزقنا حبك وحب من يحبك»",
-"«اللهم اجعلنا من التوابين»",
-"«اللهم اجعلنا من المتطهرين»",
-"«اللهم تقبل صلاتنا وصيامنا»",
-"«يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا»",
-"«فَاذْكُرُونِي أَذْكُرْكُمْ»",
-"«وَاسْتَغْفِرُوا اللَّهَ إِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ»",
-"«وَاللَّهُ خَيْرُ الرَّازِقِينَ»",
-"«اللهم ثبتنا على الحق»",
-"«اللهم اجعلنا من عبادك الصالحين»",
-"«اللهم اجعلنا من الذين يستمعون القول فيتبعون أحسنه»",
-"«اللهم اجعلنا من أهل الجنة»",
-"«اللهم اجعلنا من الذين لا خوف عليهم ولا هم يحزنون»"
+"«اللهم صلِّ وسلم على نبينا محمد»"
 ];
 
 let zIdx=0;
