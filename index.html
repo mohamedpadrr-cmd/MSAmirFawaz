@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شاشة جامع الأمير فواز - خلفية شفافة</title>
+    <title>شاشة جامع الأمير فواز - النسخة الاحترافية بالظلال</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         :root { 
             --gold-3d: #FFD700; 
             --gold-dark: #8B7500;
             --white: #F5F5F5; 
+            /* إضافة متغير لظل النص لتوحيد الفخامة */
+            --text-shadow-deep: 3px 3px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         
@@ -22,40 +24,54 @@
             transform: rotate(90deg);
             width: 100vh; height: 100vw;
             display: flex; flex-direction: column;
-            /* زيادة تعتيم الطبقة العلوية للخلفية لضمان وضوح الأرقام البيضاء */
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), 
                         url("bg.png") center/cover no-repeat;
             position: absolute; border: 4px solid var(--gold-3d);
         }
 
-        /* 1. الجزء العلوي */
+        /* 1. الجزء العلوي - إضافة الظلال للساعة والتاريخ */
         .top-section {
             height: 28vh; 
             display: flex; flex-direction: column;
             justify-content: center; text-align: center;
         }
-        .mosque-name { font-family: 'Amiri', serif; font-size: 7vh; color: var(--white); text-shadow: 0 0 15px var(--gold-3d); }
-        .date-info { font-size: 2.5vh; color: var(--gold-3d); font-weight: 700; margin-top: 0.5vh; }
+        .mosque-name { 
+            font-family: 'Amiri', serif; font-size: 7.5vh; color: var(--white); 
+            text-shadow: 0 0 25px var(--gold-3d), 2px 2px 5px #000; 
+        }
+        .date-info { 
+            font-size: 2.8vh; color: var(--gold-3d); font-weight: 700; margin-top: 1vh;
+            text-shadow: 2px 2px 4px #000; /* ظل للتاريخ */
+        }
         
         .clock-area { display: flex; align-items: center; justify-content: center; gap: 2vw; margin-top: 2vh; }
-        #clock { font-size: 15vh; font-weight: 900; color: var(--gold-3d); line-height: 0.8; text-shadow: 2px 2px 0px var(--gold-dark); }
-        #ampm { font-size: 5vh; color: var(--white); font-weight: 800; }
+        #clock { 
+            font-size: 16vh; font-weight: 900; color: var(--gold-3d); line-height: 0.8; 
+            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9), 0 0 30px rgba(139, 117, 0, 0.5); /* ظل عميق للساعة */
+        }
+        #ampm { 
+            font-size: 5.5vh; color: var(--white); font-weight: 800;
+            text-shadow: 2px 2px 8px #000; /* ظل لصباحاً/مساءً */
+        }
 
         /* 2. الجزء الأوسط: الأذكار */
         .zikr-section {
             flex: 1; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 0 5vw;
         }
-        #zikr { font-size: 6.5vh; font-weight: 800; color: var(--white); text-shadow: 2px 2px 10px #000; line-height: 1.3; transition: opacity 0.6s; }
+        #zikr { 
+            font-size: 7vh; font-weight: 800; color: var(--white); 
+            text-shadow: var(--text-shadow-deep); 
+            line-height: 1.3; transition: opacity 0.6s; 
+        }
 
-        /* 3. الجزء السفلي: تعديل الشفافية والرفع */
+        /* 3. الجزء السفلي: شفاف ومرتفع */
         .prayer-section {
             height: 52vh; 
             display: flex; flex-direction: column;
-            border-top: 3px solid var(--gold-3d); 
-            /* تعديل هنا: الشفافية 0.4 بدلاً من 0.92 لتظهر الخلفية بوضوح */
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(5px); /* إضافة تأثير ضبابي بسيط لزيادة الفخامة والوضوح */
+            border-top: 4px solid var(--gold-3d); 
+            background: rgba(0, 0, 0, 0.45); 
+            backdrop-filter: blur(8px); /* زيادة الضبابية لفخامة أكثر */
             margin-top: -8vh; 
             position: relative;
             z-index: 10;
@@ -63,25 +79,31 @@
 
         .next-prayer-box {
             background: rgba(255, 215, 0, 0.15);
-            padding: 1vh; border-bottom: 2px solid var(--gold-3d);
+            padding: 1.2vh; border-bottom: 2px solid var(--gold-3d);
             text-align: center;
         }
-        #timer-label { font-size: 3vh; color: var(--white); font-weight: 700; }
-        #timer { font-size: 8vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 3px; text-shadow: 2px 2px 4px #000; }
+        #timer-label { font-size: 3.5vh; color: var(--white); font-weight: 700; text-shadow: 2px 2px 4px #000; }
+        #timer { 
+            font-size: 8.5vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 4px;
+            text-shadow: 3px 3px 6px #000;
+        }
 
         .prayer-grid {
             flex: 1; display: grid; grid-template-columns: 1fr 1fr;
             padding: 1vh 0;
         }
         .prayer-col { display: flex; flex-direction: column; justify-content: space-around; }
-        .v-line { border-left: 1px solid rgba(255, 215, 0, 0.3); }
+        .v-line { border-left: 2px solid rgba(255, 215, 0, 0.25); }
 
         .prayer-item { display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; }
-        .p-name { font-size: 4.5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 4px #000; }
+        .p-name { font-size: 5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 5px #000; }
         
         .p-val-box { display: flex; align-items: baseline; }
-        .p-val { font-size: 6.5vh; color: var(--gold-3d); font-weight: 900; text-shadow: 2px 2px 5px #000; }
-        .p-suf { font-size: 3vh; color: var(--white); margin-right: 8px; font-weight: 700; }
+        .p-val { 
+            font-size: 7vh; color: var(--gold-3d); font-weight: 900; 
+            text-shadow: 3px 3px 6px #000; 
+        }
+        .p-suf { font-size: 3.5vh; color: var(--white); margin-right: 10px; font-weight: 700; text-shadow: 2px 2px 4px #000; }
     </style>
 </head>
 <body>
@@ -118,7 +140,14 @@
         {n: "العصر", h: 15, m: 34}, {n: "المغرب", h: 18, m: 6}, {n: "العشاء", h: 19, m: 31}
     ];
 
-    const azkar = ["سبحان الله وبحمده", "اللهم صلِّ على محمد", "لا حول ولا قوة إلا بالله", "أستغفر الله وأتوب إليه"];
+    const azkar = [
+        "سبحان الله وبحمده، سبحان الله العظيم",
+        "اللهم صلِّ وسلم على نبينا محمد",
+        "لا حول ولا قوة إلا بالله العلي العظيم",
+        "لا إله إلا الله وحده لا شريك له",
+        "يا حي يا قيوم برحمتك أستغيث",
+        "أستغفر الله العظيم وأتوب إليه"
+    ];
 
     function fmt12(h, m) {
         let s = h >= 12 ? "م" : "ص";
@@ -163,8 +192,8 @@
     let z = 0; setInterval(() => { 
         const zElem = document.getElementById("zikr");
         zElem.style.opacity = 0;
-        setTimeout(() => { zElem.innerText = azkar[++z % azkar.length]; zElem.style.opacity = 1; }, 600);
-    }, 15000);
+        setTimeout(() => { zElem.innerText = azkar[++z % azkar.length]; zElem.style.opacity = 1; }, 15000);
+    }, 16000);
 </script>
 </body>
 </html>
