@@ -8,7 +8,7 @@
 :root{
 --gold:#D4AF37;
 --white:#F5F5F5;
---glass:rgba(0,0,0,0.3);
+--glass:rgba(0,0,0,0.4);
 --iqama-color: #00FFCC;
 }
 
@@ -29,9 +29,9 @@ background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("bg.png") center
 position:absolute;
 }
 
-/* القسم العلوي: الاسم والساعة */
+/* القسم العلوي */
 .top-section{
-height:30vh;
+height:28vh;
 display:flex; flex-direction:column;
 align-items:center; justify-content:center;
 gap:1vh; margin-top:2vh;
@@ -45,9 +45,9 @@ border:1px solid rgba(212,175,55,.3);
 text-align:center; min-width: 45vh;
 }
 
-.mosque-name{ font-size:4.5vh; color:white; text-shadow:0 0 10px var(--gold); }
+.mosque-name{ font-size:4.2vh; color:white; text-shadow:0 0 10px var(--gold); }
 .date-container { border-top: 1px solid rgba(212,175,55,0.2); padding-top: 5px; }
-.date-info{ font-size:2.6vh; color:var(--gold); font-weight:700; }
+.date-info{ font-size:2.5vh; color:var(--gold); font-weight:700; }
 .date-info.miladi { color: #fff; font-size: 2vh; opacity: 0.8; }
 
 .clock-box{
@@ -56,46 +56,65 @@ padding:1vh 4vw; border-radius:20px;
 border:1px solid rgba(212,175,55,.3);
 display:flex; align-items:center; gap:1.5vw;
 }
-#clock{ font-size:10vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
-#ampm{ font-size:3.5vh; color:white; }
+#clock{ font-size:9vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
+#ampm{ font-size:3.2vh; color:white; }
 
-/* قسم الأذكار: في المنتصف تماماً */
+/* قسم الأذكار */
 .zikr-section{
-flex: 1; /* يأخذ كل المساحة المتبقية ليدفع الجدول للأسفل */
+flex: 1; 
 display:flex; align-items:center; justify-content:center;
 }
-#zikr{ font-size:4.8vh; font-weight:700; color:white; text-shadow:2px 2px 10px black; text-align:center; padding:0 10vw; }
+#zikr{ font-size:4.5vh; font-weight:700; color:white; text-shadow:2px 2px 10px black; text-align:center; padding:0 8vw; }
 
-/* قسم الصلوات: ملتصق بالأسفل */
+/* قسم الصلوات المعدل ليظهر بالكامل */
 .prayer-section{
-height:45vh; /* تحديد ارتفاع ثابت للجدول بالأسفل */
+width: 100%;
 display:flex; flex-direction:column;
-background:rgba(0,0,0,0.55);
+background:rgba(0,0,0,0.6);
 backdrop-filter:blur(12px);
-border-top:2px solid var(--gold);
+border-top:3px solid var(--gold);
+padding-bottom: 2vh; /* مساحة أمان بالأسفل */
 }
 
 .next-prayer-box{
-background:rgba(212,175,55,0.15);
-padding:0.8vh; text-align:center;
+background:rgba(212,175,55,0.2);
+padding:1vh; text-align:center;
 border-bottom:1px solid var(--gold);
+margin-bottom: 1vh;
 }
 #timer-label{ font-size:2.8vh; color:white; }
 #timer{ font-size:5.5vh; color:var(--gold); font-weight:900; }
 
 .prayer-header {
 display: grid; grid-template-columns: 1.5fr 1fr 1fr;
-padding: 0.8vh 4vw; color: var(--gold);
-font-size: 2.5vh; font-weight: bold; text-align: center;
+padding: 0.5vh 5vw; color: var(--gold);
+font-size: 2.4vh; font-weight: bold; text-align: center;
+opacity: 0.9;
 }
 
-.prayer-grid{ flex:1; display:flex; flex-direction: column; justify-content: space-evenly; padding-bottom: 2vh; }
-.prayer-item{ display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items:center; padding: 0.5vh 2vw; text-align: center; }
-.p-name{ font-size:4vh; color:white; font-weight:800; text-align: right; padding-right: 4vw; }
-.p-val{ font-size:4.5vh; color:var(--gold); font-weight:900; }
-.iqama-val { font-size:4vh; color: var(--iqama-color); font-weight: 800; }
+.prayer-grid{ 
+display:flex; flex-direction: column; 
+gap: 0.5vh; /* تقليل المسافة بين الصفوف */
+padding: 0 3vw;
+}
 
-.next-prayer{ background:rgba(212,175,55,0.2); border-radius: 10px; }
+.prayer-item{ 
+display: grid; 
+grid-template-columns: 1.5fr 1fr 1fr; 
+align-items:center; 
+padding: 0.8vh 2vw; 
+text-align: center; 
+border-radius: 12px;
+}
+
+.p-name{ font-size:3.8vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
+.p-val{ font-size:4.2vh; color:var(--gold); font-weight:900; }
+.iqama-val { font-size:3.8vh; color: var(--iqama-color); font-weight: 800; }
+
+.next-prayer{ 
+background:rgba(212,175,55,0.25); 
+box-shadow: inset 0 0 15px rgba(212,175,55,0.2);
+}
 </style>
 </head>
 <body>
@@ -124,7 +143,7 @@ font-size: 2.5vh; font-weight: bold; text-align: center;
             <span id="timer">00:00:00</span>
         </div>
         <div class="prayer-header">
-            <div style="text-align: right; padding-right: 4vw;">الصلاة</div>
+            <div style="text-align: right; padding-right: 5vw;">الصلاة</div>
             <div>الأذان</div>
             <div>الإقامة</div>
         </div>
@@ -184,7 +203,7 @@ function update(){
         let ps = prayerData[i].h * 3600 + prayerData[i].m * 60;
         if(ps > currentS){ nextS = ps; nextIdx = i; break; }
     }
-    if(!nextS){ nextS = prayerData[0].h * 3600 + prayerData[0].m * 60 + 86400; nextIdx = 0; }
+    if(!nextS){ nextS = prayerData.h * 3600 + prayerData.m * 60 + 86400; nextIdx = 0; }
 
     document.querySelectorAll(".prayer-item").forEach(el => el.classList.remove("next-prayer"));
     document.getElementById("prayer-"+nextIdx).classList.add("next-prayer");
