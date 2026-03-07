@@ -29,11 +29,13 @@ background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("bg.png") center
 position:absolute;
 }
 
+/* القسم العلوي - تم إنزاله 2 سم */
 .top-section{
 height:28vh;
 display:flex; flex-direction:column;
 align-items:center; justify-content:center;
-gap:1vh; margin-top:2vh;
+gap:1vh; 
+margin-top: calc(2vh + 2cm); /* إضافة 2 سم للأسفل */
 }
 
 .name-box{
@@ -58,6 +60,7 @@ display:flex; align-items:center; gap:1.5vw;
 #clock{ font-size:9vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
 #ampm{ font-size:3.2vh; color:white; }
 
+/* قسم الأحاديث */
 .zikr-section{
 flex: 1; 
 display:flex; align-items:center; justify-content:center;
@@ -73,13 +76,15 @@ line-height: 1.4;
 transition: opacity 1s;
 }
 
+/* قسم الصلوات - تم رفعه للأعلى */
 .prayer-section{
 width: 100%;
 display:flex; flex-direction:column;
 background:rgba(0,0,0,0.65);
 backdrop-filter:blur(15px);
 border-top:3px solid var(--gold);
-padding-bottom: 1.5vh;
+padding-bottom: 2vh;
+margin-bottom: 2cm; /* رفع القسم للأعلى بترك مساحة 2 سم بالأسفل */
 }
 
 .next-prayer-box{
@@ -212,8 +217,6 @@ function update(){
     
     document.getElementById("clock").innerText = formatTime(h, m);
     document.getElementById("ampm").innerText = h >= 12 ? "مساءً" : "صباحاً";
-    
-    // الميلادي بـ "م" والهجري بدون إضافات خارجية
     document.getElementById("miladi").innerText = now.toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric'}) + " م";
     document.getElementById("hijri").innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now);
 
