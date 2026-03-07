@@ -175,9 +175,9 @@ const azkar=[
     "قَالَ ﷺ: «مَنْ بَنَى مَسْجِدًا لِلَّهِ بَنَى اللَّهُ لَهُ فِي الْجَنَّةِ مِثْلَهُ» [رواه مسلم]",
     "قَالَ ﷺ: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ ثَقِيلَتَانِ فِي الْمِيزَانِ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ» [البخاري]",
     "قَالَ ﷺ: «أَحَبُّ الْكَلامِ إِلَى اللَّهِ أَرْبَعٌ: سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلا إِلَهَ إِلا اللَّهُ وَاللَّهُ أَكْبَرُ» [رواه مسلم]",
-    "قَالَ ﷺ: «مَنْ صَلَّى عَلَيَّ صَلاةً صَلَّى اللَّهُ عَلَيْهِ بِهَا عَشْرًا» [رواه مسلم]",
     "قَالَ ﷺ: «الدُّعَاءُ لا يُرَدُّ بَيْنَ الأَذَانِ وَالإِقَامَةِ» [رواه الترمذي وصححه الألباني]",
-    "قَالَ ﷺ: «مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ» [رواه مسلم]"
+    "قَالَ ﷺ: «خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ» [رواه البخاري]",
+    "قَالَ ﷺ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى» [البخاري ومسلم]"
 ];
 
 function formatTime(h, m) {
@@ -213,9 +213,9 @@ function update(){
     document.getElementById("clock").innerText = formatTime(h, m);
     document.getElementById("ampm").innerText = h >= 12 ? "مساءً" : "صباحاً";
     
-    // إضافة "م" للتاريخ الميلادي و "هـ" للهجري
+    // الميلادي بـ "م" والهجري بدون إضافات خارجية
     document.getElementById("miladi").innerText = now.toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric'}) + " م";
-    document.getElementById("hijri").innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now) + " هـ";
+    document.getElementById("hijri").innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now);
 
     let currentS = h * 3600 + m * 60 + s;
     let nextIdx = -1;
