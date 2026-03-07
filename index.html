@@ -2,469 +2,251 @@
 <html lang="ar" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
-
-<title>مواقيت الصلاة</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شاشة جامع الأمير فواز</title>
 <style>
-
+:root{
+ --gold:#D4AF37;
+ --white:#F5F5F5;
+ --glass:rgba(0,0,0,0.35);
+ --iqama-color: #00FFCC;
+}
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:'Tajawal',sans-serif;
+}
 body{
-margin:0;
-font-family:tahoma;
-background:#0b0b0b;
-color:white;
-overflow:hidden;
+ background:#000;
+ width:100vw;
+ height:100vh;
+ overflow:hidden;
+ display:flex;
+ align-items:center;
+ justify-content:center;
 }
-
-/* الشريط العلوي */
-
-.top-bar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 40px;
-background:#111;
-border-bottom:3px solid gold;
-font-size:26px;
+.main-container{
+ transform:rotate(90deg);
+ width:100vh;
+ height:100vw;
+ display:flex;
+ flex-direction:column;
+ background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("bg.png") center/cover no-repeat;
+ position:absolute;
 }
-
-#clock{
-font-size:40px;
-font-weight:bold;
+/* القسم العلوي - مزاح للأسفل 2 سم */
+.top-section{
+ height:28vh;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:1vh;
+ margin-top: calc(2vh + 2cm);
 }
-
-/* جدول الصلوات */
-
-.prayer-section{
-display:flex;
-justify-content:center;
-padding:20px;
+.name-box{
+ background:var(--glass);
+ backdrop-filter:blur(8px);
+ padding:1vh 3vw;
+ border-radius:20px;
+ border:1px solid rgba(212,175,55,.3);
+ text-align:center;
+ min-width: 45vh;
 }
-
-table{
-width:90%;
-border-collapse:collapse;
-text-align:center;
-font-size:28px;
+.mosque-name{
+ font-size:4.2vh;
+ color:white;
+ text-shadow:0 0 20px var(--gold);
 }
-
-th{
-background:#1b1b1b;
-padding:15px;
-border-bottom:2px solid gold;
-}
-
-td{
-padding:15px;
-border-bottom:1px solid #333;
-}
-
-.next-prayer{
-background:rgba(212,175,55,0.25);
-box-shadow:0 0 25px rgba(212,175,55,.7);
-}
-
-/* العداد */
-
-.countdown{
-text-align:center;
-font-size:42px;
-color:gold;
-margin-top:10px;
-}
-
-/* الأحاديث */
-
-.hadith{
-position:absolute;
-bottom:0;
-width:100%;
-background:#111;
-padding:25px;
-font-size:26px;
-text-align:center;
-border-top:3px solid gold;
-}
-
+.date-container { border-top: 1px solid rgba(212,175,55,0.2); padding-top: 5px; }
+.date-info{ font-size:2.5vh; color:var(--gold); font-weight:700; }
+.date-info.miladi { color: #fff; font-size: 2vh; opacity: 0.8; }
+.clock-box{ background:var(--glass); backdrop-filter:blur(8px); padding:1vh 4vw; border-radius:20px; border:1px solid rgba(212,175,55,.3); display:flex; align-items:center; gap:1.5vw; }
+#clock{ font-size:9vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
+#ampm{ font-size:3.2vh; color:white; }
+/* قسم الأحاديث مع التوهج */
+.zikr-section{ flex: 1; display:flex; align-items:center; justify-content:center; padding: 0 6vw; }
+#zikr{ font-size:4.2vh; font-weight:800; color:white; text-shadow: 0 0 15px rgba(212,175,55,0.8), 0 0 30px rgba(0,0,0,0.8); text-align:center; line-height: 1.4; transition: opacity 1s; }
+/* قسم الصلوات */
+.prayer-section{ width: 100%; display:flex; flex-direction:column; background:rgba(0,0,0,0.65); backdrop-filter:blur(15px); border-top:3px solid var(--gold); padding-bottom: calc(1.5vh + 1cm); margin-bottom: 1.5cm; }
+.next-prayer-box{ background:rgba(212,175,55,0.15); padding:0.5vh; text-align:center; border-bottom:1px solid var(--gold); margin-bottom: 0.5vh; }
+#timer-label{ font-size:2.8vh; color:white; }
+#timer{ font-size:6vh; color:var(--gold); font-weight:900; }
+.iqama-mode { background: rgba(0, 255, 204, 0.2) !important; }
+.iqama-mode #timer { color: var(--iqama-color) !important; text-shadow: 0 0 20px var(--iqama-color); }
+.iqama-mode #timer-label { color: var(--iqama-color) !important; }
+.prayer-header { display: grid; grid-template-columns: 1.5fr 1fr 1fr; padding: 1vh 5vw; color: var(--gold); font-size: 2.2vh; font-weight: bold; text-align: center; }
+.prayer-grid{ display:flex; flex-direction: column; gap: 0.5cm; padding: 0 3vw; }
+.prayer-item{ display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items:center; padding: 0.8vh 2vw; text-align: center; border-radius: 10px; }
+.p-name{ font-size:3.8vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
+.p-val{ font-size:4.2vh; color:var(--gold); font-weight:900; }
+.iqama-val { font-size:3.8vh; color: var(--iqama-color); font-weight: 800; }
+.next-prayer{ background:rgba(212,175,55,0.25); box-shadow: inset 0 0 15px rgba(212,175,55,0.2); }
 </style>
-
 </head>
-
 <body>
-
-<div class="top-bar">
-
-<div id="date"></div>
-
-<div id="clock"></div>
-
+<div class="main-container">
+<div class="top-section">
+<div class="name-box">
+<div class="mosque-name">جامع الأمير فواز</div>
+<div class="date-container">
+<div id="hijri" class="date-info">--</div>
+<div id="miladi" class="date-info miladi">--</div>
 </div>
-
+</div>
+<div class="clock-box">
+<div id="clock">00:00</div>
+<div id="ampm">--</div>
+</div>
+</div>
+<div class="zikr-section">
+<div id="zikr">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+</div>
 <div class="prayer-section">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>الصلاة</th>
-
-<th>الأذان</th>
-
-<th>الإقامة</th>
-
-</tr>
-
-</thead>
-
-<tbody id="rows"></tbody>
-
-</table>
-
+<div class="next-prayer-box" id="timerBox">
+<span id="timer-label">الصلاة القادمة بعد</span>
+<span id="timer">00:00:00</span>
 </div>
-
-<div class="countdown" id="counter"></div>
-
-<div class="hadith" id="hadith"></div>
-
+<div class="prayer-header">
+<div style="text-align: right; padding-right: 5vw;">الصلاة</div>
+<div>الأذان</div>
+<div>الإقامة</div>
+</div>
+<div class="prayer-grid" id="prayerContainer"></div>
+</div>
+</div>
 <script>
-
-/* مواقيت الأذان والإقامة */
-
-const prayers=[
-
-{name:"الفجر",azan:{h:5,m:10},iqama:{h:5,m:35}},
-
-{name:"الشروق",azan:{h:6,m:34},iqama:null},
-
-{name:"الظهر",azan:{h:12,m:20},iqama:{h:12,m:35}},
-
-{name:"العصر",azan:{h:15,m:34},iqama:{h:15,m:49}},
-
-{name:"المغرب",azan:{h:18,m:6},iqama:{h:18,m:16}},
-
-{name:"العشاء",azan:{h:19,m:31},iqama:{h:19,m:51}}
-
+const prayerData=[ 
+{n:"الفجر", h:5, m:10, iqama:25}, 
+{n:"الشروق", h:6, m:34, iqama:0}, 
+{n:"الظهر", h:12, m:20, iqama:15}, 
+{n:"العصر", h:15, m:34, iqama:15}, 
+{n:"المغرب", h:18, m:6, iqama:10}, 
+{n:"العشاء", h:19, m:31, iqama:20} 
 ];
 
-/* إنشاء جدول الصلوات */
-
-function createTable(){
-
-let html="";
-
-prayers.forEach((p,i)=>{
-
-let az=
-
-String(p.azan.h).padStart(2,"0")+":"+
-
-String(p.azan.m).padStart(2,"0");
-
-let iq="--";
-
-if(p.iqama){
-
-iq=
-
-String(p.iqama.h).padStart(2,"0")+":"+
-
-String(p.iqama.m).padStart(2,"0");
-
-}
-
-html+=`
-
-<tr id="p${i}">
-
-<td>${p.name}</td>
-
-<td>${az}</td>
-
-<td>${iq}</td>
-
-</tr>
-
-`;
-
-});
-
-document.getElementById("rows").innerHTML=html;
-
-}
-
-createTable();
-
-/* الساعة */
-
-function updateClock(){
-
-let now=new Date();
-
-let h=now.getHours();
-
-let m=now.getMinutes();
-
-let s=now.getSeconds();
-
-document.getElementById("clock").innerText=
-
-String(h).padStart(2,"0")+":"+
-
-String(m).padStart(2,"0")+":"+
-
-String(s).padStart(2,"0");
-
-}
-
-setInterval(updateClock,1000);
-
-/* التاريخ ميلادي وهجري */
-
-function updateDate(){
-
-let now=new Date();
-
-let g=now.toLocaleDateString("ar-SA");
-
-let h=new Intl.DateTimeFormat('ar-TN-u-ca-islamic',{
-
-day:'numeric',
-
-month:'long',
-
-year:'numeric'
-
-}).format(now);
-
-document.getElementById("date").innerText=
-
-"الميلادي: "+g+" | الهجري: "+h;
-
-}
-
-updateDate();
-
-/* تحديث العداد */
-
-function update(){
-
-let now=new Date();
-
-let current=
-
-now.getHours()*3600+
-
-now.getMinutes()*60+
-
-now.getSeconds();
-
-let nextIndex=-1;
-
-let nextType="azan";
-
-let nextTime=0;
-
-for(let i=0;i<prayers.length;i++){
-
-let az=
-
-prayers[i].azan.h*3600+
-
-prayers[i].azan.m*60;
-
-let iq=null;
-
-if(prayers[i].iqama){
-
-iq=
-
-prayers[i].iqama.h*3600+
-
-prayers[i].iqama.m*60;
-
-}
-
-/* بعد الأذان وقبل الإقامة */
-
-if(iq && current>=az && current<iq){
-
-nextIndex=i;
-
-nextType="iqama";
-
-nextTime=iq;
-
-break;
-
-}
-
-/* قبل الأذان */
-
-if(current<az){
-
-nextIndex=i;
-
-nextType="azan";
-
-nextTime=az;
-
-break;
-
-}
-
-}
-
-/* بعد آخر صلاة */
-
-if(nextIndex==-1){
-
-nextIndex=0;
-
-nextType="azan";
-
-nextTime=
-
-prayers[0].azan.h*3600+
-
-prayers[0].azan.m*60+
-
-86400;
-
-}
-
-/* إضاءة الصلاة القادمة */
-
-document.querySelectorAll("tr").forEach(el=>{
-
-el.classList.remove("next-prayer");
-
-});
-
-let row=document.getElementById("p"+nextIndex);
-
-if(row) row.classList.add("next-prayer");
-
-/* العداد */
-
-let diff=nextTime-current;
-
-let h=Math.floor(diff/3600);
-
-let m=Math.floor((diff%3600)/60);
-
-let s=diff%60;
-
-let label="متبقي على الأذان";
-
-if(nextType=="iqama") label="متبقي على الإقامة";
-
-document.getElementById("counter").innerText=
-
-label+" : "+
-
-String(h).padStart(2,"0")+":"+
-
-String(m).padStart(2,"0")+":"+
-
-String(s).padStart(2,"0");
-
-}
-
-setInterval(update,1000);
-
-/* الأحاديث */
+const azkar=[ 
+"سبحان الله وبحمده سبحان الله العظيم",
+"اللهم صل وسلم على نبينا محمد",
+"أستغفر الله العظيم وأتوب إليه",
+"لا حول ولا قوة إلا بالله",
+"سبحان الله والحمد لله والله أكبر"
+];
 
 const hadiths=[
-
 "إنما الأعمال بالنيات",
-
 "الدين النصيحة",
-
 "المسلم من سلم المسلمون من لسانه ويده",
-
 "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه",
-
 "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت",
-
 "الطهور شطر الإيمان",
-
 "الكلمة الطيبة صدقة",
-
 "تبسمك في وجه أخيك صدقة",
-
 "أحب الأعمال إلى الله الصلاة على وقتها",
-
 "بروا آباءكم تبركم أبناؤكم",
-
 "من سلك طريقاً يلتمس فيه علماً سهل الله له طريقاً إلى الجنة",
-
 "خيركم من تعلم القرآن وعلمه",
-
 "اليد العليا خير من اليد السفلى",
-
 "لا تغضب",
-
 "اتق الله حيثما كنت",
-
 "أقرب ما يكون العبد من ربه وهو ساجد",
-
 "إن الله جميل يحب الجمال",
-
 "من لا يشكر الناس لا يشكر الله",
-
 "الرفق لا يكون في شيء إلا زانه",
-
 "أحب الناس إلى الله أنفعهم للناس",
-
 "خيركم خيركم لأهله",
-
 "صل من قطعك",
-
 "لا تحقرن من المعروف شيئاً",
-
 "إن الله لا ينظر إلى صوركم ولكن إلى قلوبكم",
-
 "أفضل الصدقة سقي الماء",
-
 "من دل على خير فله مثل أجر فاعله",
-
 "إن الله كتب الإحسان على كل شيء",
-
 "من غشنا فليس منا",
-
 "يسروا ولا تعسروا",
-
 "بشروا ولا تنفروا"
-
 ];
 
-let hadithIndex=0;
-
-function changeHadith(){
-
-document.getElementById("hadith").innerText=
-
-hadiths[hadithIndex];
-
-hadithIndex++;
-
-if(hadithIndex>=hadiths.length){
-
-hadithIndex=0;
-
+function formatTime(h, m){
+  let h12=h%12||12;
+  return `${String(h12).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
 }
 
+function calculateIqama(h,m,offset){
+ if(offset===0) return "--:--";
+ let totalMins=h*60+m+offset;
+ return formatTime(Math.floor(totalMins/60)%24,totalMins%60);
 }
 
-changeHadith();
+function init(){
+ const container=document.getElementById("prayerContainer");
+ container.innerHTML="";
+ prayerData.forEach((p,i)=>{
+   container.innerHTML+=`<div class="prayer-item" id="prayer-${i}">
+   <div class="p-name">${p.n}</div>
+   <div class="p-val">${formatTime(p.h,p.m)}</div>
+   <div class="iqama-val">${calculateIqama(p.h,p.m,p.iqama)}</div>
+   </div>`;
+ });
+}
 
-setInterval(changeHadith,15000);
+function updateTime(){
+ const now=new Date();
+ const rDate=new Date(now.toLocaleString("en-US",{timeZone:"Asia/Riyadh"}));
+ let h=rDate.getHours(), m=rDate.getMinutes(), s=rDate.getSeconds();
+ document.getElementById("clock").innerText=formatTime(h,m);
+ document.getElementById("ampm").innerText=h>=12?"مساءً":"صباحاً";
+ document.getElementById("miladi").innerText=now.toLocaleDateString('ar-EG',{day:'numeric',month:'long',year:'numeric'})+" م";
+ document.getElementById("hijri").innerText=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(now);
 
+ let currentS=h*3600+m*60+s;
+ let nextIdx=-1, nextType="azan", nextTime=0;
+ for(let i=0;i<prayerData.length;i++){
+   let az=prayerData[i].h*3600+prayerData[i].m*60;
+   let iq=prayerData[i].iqama?az+(prayerData[i].iqama*60):null;
+   if(iq && currentS>=az && currentS<iq){ nextIdx=i; nextType="iqama"; nextTime=iq; break; }
+   if(currentS<az){ nextIdx=i; nextType="azan"; nextTime=az; break; }
+ }
+ if(nextIdx==-1){ nextIdx=0; nextType="azan"; nextTime=prayerData[0].h*3600+prayerData[0].m*60+86400; }
+
+ document.querySelectorAll(".prayer-item").forEach(el=>el.classList.remove("next-prayer"));
+ let row=document.getElementById("prayer-"+nextIdx);
+ if(row) row.classList.add("next-prayer");
+
+ let diff=nextTime-currentS;
+ let hh=Math.floor(diff/3600), mm=Math.floor((diff%3600)/60), ss=diff%60;
+ document.getElementById("timer-label").innerText=nextType=="iqama"?"متبقي على الإقامة":"متبقي على الأذان";
+ document.getElementById("timer").innerText=`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+}
+
+init();
+updateTime();
+setInterval(updateTime,1000);
+
+/* تغيير الأذكار كل 25 ثانية */
+let z=0;
+setInterval(()=>{
+ const el=document.getElementById("zikr");
+ el.style.opacity=0;
+ setTimeout(()=>{
+   z=(z+1)%azkar.length;
+   el.innerText=azkar[z];
+   el.style.opacity=1;
+ },600);
+},25000);
+
+/* الأحاديث تتغير كل 25 ثانية */
+let hIdx=0;
+setInterval(()=>{
+ document.getElementById("hadith")?.remove();
+ let div=document.createElement("div");
+ div.className="hadith";
+ div.id="hadith";
+ div.innerText=hadiths[hIdx];
+ document.body.appendChild(div);
+ hIdx=(hIdx+1)%hadiths.length;
+},25000);
 </script>
-
 </body>
-
 </html>
