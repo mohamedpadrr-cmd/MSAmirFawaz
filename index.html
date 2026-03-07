@@ -9,7 +9,7 @@
 <style>
 
 :root{
---brown:#C19A6B;
+--gold:#D4AF37;
 --white:#F5F5F5;
 --glass:rgba(0,0,0,0.45);
 }
@@ -43,6 +43,8 @@ url("bg.png") center/cover no-repeat;
 position:absolute;
 }
 
+/* القسم العلوي */
+
 .top-section{
 height:38vh;
 display:flex;
@@ -53,21 +55,25 @@ gap:2vh;
 margin-top:2cm;
 }
 
+/* مربع الاسم */
+
 .name-box{
 background:var(--glass);
 backdrop-filter:blur(10px);
 padding:2vh 4vw;
 border-radius:30px;
-border:2px solid rgba(193,154,107,.6);
+border:2px solid rgba(212,175,55,.6);
 text-align:center;
 }
+
+/* مربع الساعة */
 
 .clock-box{
 background:var(--glass);
 backdrop-filter:blur(10px);
 padding:3vh 5vw;
 border-radius:30px;
-border:2px solid rgba(193,154,107,.6);
+border:2px solid rgba(212,175,55,.6);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -77,12 +83,12 @@ gap:2vw;
 .mosque-name{
 font-size:7.5vh;
 color:white;
-text-shadow:0 0 20px var(--brown);
+text-shadow:0 0 20px var(--gold);
 }
 
 .date-info{
 font-size:2.8vh;
-color:var(--brown);
+color:var(--gold);
 font-weight:700;
 margin-top:1vh;
 }
@@ -92,9 +98,9 @@ margin-top:1vh;
 #clock{
 font-size:16vh;
 font-weight:900;
-color:var(--brown);
+color:var(--gold);
 line-height:1;
-text-shadow:0 0 10px #000;
+text-shadow:0 0 10px #000,0 0 20px #000;
 }
 
 #ampm{
@@ -129,18 +135,20 @@ transition:opacity .7s;
 height:52vh;
 display:flex;
 flex-direction:column;
-border-top:4px solid var(--brown);
+border-top:4px solid var(--gold);
 background:rgba(0,0,0,.45);
 backdrop-filter:blur(10px);
 margin-top:-10vh;
 padding-bottom:5vh;
 }
 
+/* الصلاة القادمة */
+
 .next-prayer-box{
-background:rgba(193,154,107,.15);
+background:rgba(212,175,55,.15);
 padding:1.5vh;
 text-align:center;
-border-bottom:2px solid var(--brown);
+border-bottom:2px solid var(--gold);
 }
 
 #timer-label{
@@ -150,7 +158,7 @@ color:white;
 
 #timer{
 font-size:8vh;
-color:var(--brown);
+color:var(--gold);
 font-weight:900;
 letter-spacing:3px;
 }
@@ -170,7 +178,7 @@ justify-content:space-around;
 }
 
 .v-line{
-border-left:2px solid rgba(193,154,107,.3);
+border-left:2px solid rgba(212,175,55,.3);
 }
 
 .prayer-item{
@@ -195,8 +203,9 @@ white-space:nowrap;
 
 .p-val{
 font-size:7vh;
-color:var(--brown);
+color:var(--gold);
 font-weight:900;
+text-shadow:0 0 8px #000;
 }
 
 .p-suf{
@@ -251,6 +260,8 @@ color:white;
 
 <script>
 
+/* مواقيت الصلاة */
+
 const prayerData=[
 {n:"الفجر",h:5,m:10},
 {n:"الشروق",h:6,m:34},
@@ -260,6 +271,8 @@ const prayerData=[
 {n:"العشاء",h:19,m:31}
 ];
 
+/* الأذكار */
+
 const azkar=[
 "سبحان الله وبحمده سبحان الله العظيم",
 "اللهم صل وسلم على نبينا محمد",
@@ -267,6 +280,8 @@ const azkar=[
 "لا حول ولا قوة إلا بالله",
 "سبحان الله والحمد لله والله أكبر"
 ];
+
+/* توقيت جدة */
 
 function getJeddahTime(){
 
@@ -294,10 +309,15 @@ return {h,m,s};
 
 }
 
+/* إنشاء جدول الصلوات */
+
 function init(){
 
 const r=document.getElementById("rCol");
 const l=document.getElementById("lCol");
+
+r.innerHTML="";
+l.innerHTML="";
 
 prayerData.forEach((p,i)=>{
 
@@ -318,6 +338,8 @@ else l.innerHTML+=html;
 });
 
 }
+
+/* تحديث الساعة والعداد */
 
 function update(){
 
@@ -340,7 +362,38 @@ document.getElementById("miladi").innerText=
 now.toLocaleDateString('ar-SA',{day:'numeric',month:'long',year:'numeric'});
 
 document.getElementById("hijri").innerText=
-new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(now);
+new Intl.DateTimeFormat('ar-SA-u-ca-islamic',
+{day:'numeric',month:'long',year:'numeric'}).format(now);
+
+/* العداد */
+
+let current=h*3600 + m*60 + s;
+
+let next=0;
+
+for(let p of prayerData){
+
+let ps=p.h*3600 + p.m*60;
+
+if(ps>current){
+next=ps;
+break;
+}
+
+}
+
+if(!next){
+next=prayerData[0].h*3600 + prayerData[0].m*60 + 86400;
+}
+
+let diff=next-current;
+
+let hh=Math.floor(diff/3600);
+let mm=Math.floor((diff%3600)/60);
+let ss=diff%60;
+
+document.getElementById("timer").innerText=
+`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
 
 }
 
@@ -348,16 +401,22 @@ init();
 update();
 setInterval(update,1000);
 
+/* تبديل الأذكار */
+
 let z=0;
 
 setInterval(()=>{
+
 const el=document.getElementById("zikr");
+
 el.style.opacity=0;
+
 setTimeout(()=>{
 z=(z+1)%azkar.length;
 el.innerText=azkar[z];
 el.style.opacity=1;
 },600);
+
 },15000);
 
 </script>
