@@ -82,8 +82,6 @@ justify-content:center;
 gap:2vw;
 }
 
-/* النصوص */
-
 .mosque-name{
 font-size:7.5vh;
 color:white;
@@ -197,6 +195,13 @@ color:white;
 font-weight:800;
 }
 
+.time-box{
+display:flex;
+align-items:center;
+gap:10px;
+white-space:nowrap;
+}
+
 .p-val{
 font-size:7vh;
 color:gold;
@@ -206,7 +211,6 @@ font-weight:900;
 .p-suf{
 font-size:3.5vh;
 color:white;
-margin-right:10px;
 }
 
 </style>
@@ -322,7 +326,7 @@ let h12=p.h%12||12;
 
 let html=`<div class="prayer-item">
 <div class="p-name">${p.n}</div>
-<div>
+<div class="time-box">
 <span class="p-val">${String(h12).padStart(2,'0')}:${String(p.m).padStart(2,'0')}</span>
 <span class="p-suf">${suf}</span>
 </div>
@@ -340,7 +344,6 @@ else l.innerHTML+=html;
 function update(){
 
 const now=new Date();
-
 const jeddah=getJeddahTime();
 
 let h=jeddah.h;
@@ -362,7 +365,7 @@ document.getElementById("hijri").innerText=
 new Intl.DateTimeFormat('ar-SA-u-ca-islamic',
 {day:'numeric',month:'long',year:'numeric'}).format(now);
 
-/* العداد التنازلي */
+/* العداد */
 
 let current=h*3600 + m*60 + s;
 
@@ -373,18 +376,14 @@ for(let p of prayerData){
 let ps=p.h*3600 + p.m*60;
 
 if(ps>current){
-
 next=ps;
 break;
-
 }
 
 }
 
 if(!next){
-
 next=prayerData[0].h*3600 + prayerData[0].m*60 + 86400;
-
 }
 
 let diff=next-current;
@@ -400,7 +399,6 @@ document.getElementById("timer").innerText=
 
 init();
 update();
-
 setInterval(update,1000);
 
 /* تبديل الأذكار */
@@ -414,13 +412,9 @@ const el=document.getElementById("zikr");
 el.style.opacity=0;
 
 setTimeout(()=>{
-
 z=(z+1)%azkar.length;
-
 el.innerText=azkar[z];
-
 el.style.opacity=1;
-
 },600);
 
 },15000);
