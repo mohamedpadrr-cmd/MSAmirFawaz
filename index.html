@@ -4,209 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>شاشة جامع الأمير فواز</title>
-
 <style>
 :root{
 --gold:#D4AF37;
 --white:#F5F5F5;
---glass:rgba(0,0,0,0.35); /* تقليل التعتيم لإظهار الخلفية */
+--glass:rgba(0,0,0,0.3);
 --iqama-color: #00FFCC;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Tajawal',sans-serif;
-}
+*{ margin:0; padding:0; box-sizing:border-box; font-family:'Tajawal',sans-serif; }
 
 body{
 background:#000;
-width:100vw;
-height:100vh;
+width:100vw; height:100vh;
 overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
+display:flex; align-items:center; justify-content:center;
 }
 
 .main-container{
 transform:rotate(90deg);
-width:100vh;
-height:100vw;
-display:flex;
-flex-direction:column;
-background:
-linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.4)),
-url("bg.png") center/cover no-repeat;
+width:100vh; height:100vw;
+display:flex; flex-direction:column;
+background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.4)), url("bg.png") center/cover no-repeat;
 position:absolute;
 }
 
-/* القسم العلوي - تم تصغير الارتفاع */
+/* القسم العلوي: الاسم والساعة */
 .top-section{
-height:35vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:1.5vh;
-margin-top:0.5cm;
+height:30vh;
+display:flex; flex-direction:column;
+align-items:center; justify-content:center;
+gap:1vh; margin-top:2vh;
 }
 
 .name-box{
 background:var(--glass);
 backdrop-filter:blur(8px);
-padding:1.5vh 3vw;
-border-radius:25px;
-border:1px solid rgba(212,175,55,.4);
-text-align:center;
-min-width: 50vh;
+padding:1vh 3vw; border-radius:20px;
+border:1px solid rgba(212,175,55,.3);
+text-align:center; min-width: 45vh;
 }
 
-.mosque-name{
-font-size:5vh; /* تصغير حجم اسم المسجد */
-color:white;
-text-shadow:0 0 15px var(--gold);
-margin-bottom: 5px;
-}
+.mosque-name{ font-size:4.5vh; color:white; text-shadow:0 0 10px var(--gold); }
+.date-container { border-top: 1px solid rgba(212,175,55,0.2); padding-top: 5px; }
+.date-info{ font-size:2.6vh; color:var(--gold); font-weight:700; }
+.date-info.miladi { color: #fff; font-size: 2vh; opacity: 0.8; }
 
-.date-container {
-display: flex;
-flex-direction: column;
-border-top: 1px solid rgba(212,175,55,0.2);
-padding-top: 5px;
-}
-
-.date-info{
-font-size:2.8vh; /* تصغير حجم التاريخ الهجري */
-color:var(--gold);
-font-weight:700;
-}
-
-.date-info.miladi {
-color: #fff;
-font-size: 2.2vh; /* تصغير حجم التاريخ الميلادي */
-opacity: 0.8;
-}
-
-/* الساعة - تم تصغيرها لتناسب الشاشة */
 .clock-box{
-background:var(--glass);
-backdrop-filter:blur(8px);
-padding:1.5vh 4vw;
-border-radius:25px;
-border:1px solid rgba(212,175,55,.4);
-display:flex;
-align-items:center;
-justify-content:center;
-gap:1.5vw;
+background:var(--glass); backdrop-filter:blur(8px);
+padding:1vh 4vw; border-radius:20px;
+border:1px solid rgba(212,175,55,.3);
+display:flex; align-items:center; gap:1.5vw;
 }
+#clock{ font-size:10vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
+#ampm{ font-size:3.5vh; color:white; }
 
-#clock{
-font-size:11vh; /* تصغير الساعة */
-font-weight:900;
-color:var(--gold);
-line-height:1;
-text-shadow:0 0 10px #000;
-}
-
-#ampm{
-font-size:4vh;
-color:white;
-}
-
-/* الأذكار */
+/* قسم الأذكار: في المنتصف تماماً */
 .zikr-section{
-height: 10vh;
-display:flex;
-align-items:center;
-justify-content:center;
+flex: 1; /* يأخذ كل المساحة المتبقية ليدفع الجدول للأسفل */
+display:flex; align-items:center; justify-content:center;
 }
+#zikr{ font-size:4.8vh; font-weight:700; color:white; text-shadow:2px 2px 10px black; text-align:center; padding:0 10vw; }
 
-#zikr{
-font-size:4.5vh; /* تصغير حجم الذكر */
-font-weight:700;
-color:white;
-text-shadow:2px 2px 10px black;
-}
-
-/* قسم الصلوات - جعل الخلفية أكثر شفافية */
+/* قسم الصلوات: ملتصق بالأسفل */
 .prayer-section{
-flex: 1;
-display:flex;
-flex-direction:column;
+height:45vh; /* تحديد ارتفاع ثابت للجدول بالأسفل */
+display:flex; flex-direction:column;
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(12px);
 border-top:2px solid var(--gold);
-background:rgba(0,0,0,0.5); /* زيادة الشفافية */
-backdrop-filter:blur(10px);
 }
 
 .next-prayer-box{
 background:rgba(212,175,55,0.15);
-padding:1vh;
-text-align:center;
+padding:0.8vh; text-align:center;
 border-bottom:1px solid var(--gold);
 }
+#timer-label{ font-size:2.8vh; color:white; }
+#timer{ font-size:5.5vh; color:var(--gold); font-weight:900; }
 
-#timer-label{ font-size:3vh; color:white; }
-#timer{ font-size:6vh; color:var(--gold); font-weight:900; }
-
-/* جدول الصلوات - تصغير المسافات */
 .prayer-header {
-display: grid;
-grid-template-columns: 1.5fr 1fr 1fr;
-padding: 1vh 4vw;
-color: var(--gold);
-font-size: 2.8vh;
-font-weight: bold;
-text-align: center;
+display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+padding: 0.8vh 4vw; color: var(--gold);
+font-size: 2.5vh; font-weight: bold; text-align: center;
 }
 
-.prayer-grid{
-flex:1;
-display:flex;
-flex-direction: column;
-justify-content: center;
-padding: 0 2vw;
-}
+.prayer-grid{ flex:1; display:flex; flex-direction: column; justify-content: space-evenly; padding-bottom: 2vh; }
+.prayer-item{ display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items:center; padding: 0.5vh 2vw; text-align: center; }
+.p-name{ font-size:4vh; color:white; font-weight:800; text-align: right; padding-right: 4vw; }
+.p-val{ font-size:4.5vh; color:var(--gold); font-weight:900; }
+.iqama-val { font-size:4vh; color: var(--iqama-color); font-weight: 800; }
 
-.prayer-item{
-display: grid;
-grid-template-columns: 1.5fr 1fr 1fr;
-align-items:center;
-padding: 1vh 2vw; /* تقليل الحشو الرأسي */
-margin: 0.2vh 0;
-border-radius: 15px;
-text-align: center;
-}
-
-.p-name{
-font-size:4.5vh; /* تصغير اسم الصلاة */
-color:white;
-font-weight:800;
-text-align: right;
-padding-right: 4vw;
-}
-
-.p-val{
-font-size:5vh; /* تصغير وقت الأذان */
-color:var(--gold);
-font-weight:900;
-}
-
-.iqama-val {
-font-size: 4.5vh; /* تصغير وقت الإقامة */
-color: var(--iqama-color);
-font-weight: 800;
-}
-
-.next-prayer{
-background:rgba(212,175,55,0.25);
-box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
+.next-prayer{ background:rgba(212,175,55,0.2); border-radius: 10px; }
 </style>
 </head>
-
 <body>
 <div class="main-container">
     <div class="top-section">
@@ -272,7 +163,7 @@ function init(){
         container.innerHTML += `
             <div class="prayer-item" id="prayer-${i}">
                 <div class="p-name">${p.n}</div>
-                <div class="p-val">${formatTime(p.h, p.m)} <small style="font-size:2.5vh">${suf}</small></div>
+                <div class="p-val">${formatTime(p.h, p.m)} <small style="font-size:2vh">${suf}</small></div>
                 <div class="iqama-val">${calculateIqama(p.h, p.m, p.iqama)}</div>
             </div>`;
     });
