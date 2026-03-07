@@ -190,4 +190,24 @@ let isIqama = false;
 let remainingS = 0;
 
 for(let i=0; i<prayerData.length; i++){
-let pS = prayerData[i].h * 3600 + prayerData[i].m *
+let pS = prayerData[i].h * 3600 + prayerData[i].m * 60;
+let iqS = pS + (prayerData[i].iqama*60);
+if(currentS < pS) { nextIdx = i; remainingS = pS - currentS; isIqama=false; break; }
+if(currentS < iqS) { nextIdx=i; remainingS = iqS - currentS; isIqama=true; break; }
+}
+
+const timerBox = document.getElementById("timerBox");
+if(isIqama){ timerBox.classList.add("iqama-mode"); } else { timerBox.classList.remove("iqama-mode"); }
+let hh = Math.floor(remainingS/3600);
+let mm = Math.floor((remainingS%3600)/60);
+let ss = remainingS%60;
+document.getElementById("timer").innerText = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+document.getElementById("zikr").innerText = azkar[Math.floor(Math.random()*azkar.length)];
+}
+
+init();
+update();
+setInterval(update,1000);
+</script>
+</body>
+</html>
