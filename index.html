@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -186,6 +185,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 4vw;
+transition:.4s;
 }
 
 .p-name{
@@ -213,8 +213,15 @@ font-size:3.5vh;
 color:white;
 }
 
-</style>
+/* تمييز الصلاة القادمة */
 
+.next-prayer{
+background:rgba(212,175,55,0.25);
+border-radius:15px;
+box-shadow:0 0 20px rgba(212,175,55,.6);
+}
+
+</style>
 </head>
 
 <body>
@@ -281,31 +288,31 @@ const azkar=[
 "سبحان الله والحمد لله والله أكبر"
 ];
 
-/* توقيت جدة */
+/* حساب توقيت جدة */
+
+let jeddahOffset=null;
 
 function getJeddahTime(){
 
 const now=new Date();
 
-const formatter=new Intl.DateTimeFormat('en-US',{
-timeZone:'Asia/Riyadh',
-hour:'2-digit',
-minute:'2-digit',
-second:'2-digit',
-hour12:false
-});
+if(jeddahOffset===null){
 
-const parts=formatter.formatToParts(now);
+const jeddah=new Date(
+now.toLocaleString("en-US",{timeZone:"Asia/Riyadh"})
+);
 
-let h=0,m=0,s=0;
+jeddahOffset=jeddah.getTime()-now.getTime();
 
-parts.forEach(p=>{
-if(p.type==="hour") h=parseInt(p.value);
-if(p.type==="minute") m=parseInt(p.value);
-if(p.type==="second") s=parseInt(p.value);
-});
+}
 
-return {h,m,s};
+const jeddahNow=new Date(now.getTime()+jeddahOffset);
+
+return{
+h:jeddahNow.getHours(),
+m:jeddahNow.getMinutes(),
+s:jeddahNow.getSeconds()
+};
 
 }
 
@@ -324,7 +331,7 @@ prayerData.forEach((p,i)=>{
 let suf=p.h>=12?"م":"ص";
 let h12=p.h%12||12;
 
-let html=`<div class="prayer-item">
+let html=`<div class="prayer-item" id="prayer-${i}">
 <div class="p-name">${p.n}</div>
 <div class="time-box">
 <span class="p-val">${String(h12).padStart(2,'0')}:${String(p.m).padStart(2,'0')}</span>
@@ -370,13 +377,16 @@ new Intl.DateTimeFormat('ar-SA-u-ca-islamic',
 let current=h*3600 + m*60 + s;
 
 let next=0;
+let nextIndex=0;
 
-for(let p of prayerData){
+for(let i=0;i<prayerData.length;i++){
 
+let p=prayerData[i];
 let ps=p.h*3600 + p.m*60;
 
 if(ps>current){
 next=ps;
+nextIndex=i;
 break;
 }
 
@@ -384,7 +394,17 @@ break;
 
 if(!next){
 next=prayerData[0].h*3600 + prayerData[0].m*60 + 86400;
+nextIndex=0;
 }
+
+/* تحديد الصلاة القادمة */
+
+document.querySelectorAll(".prayer-item").forEach(el=>{
+el.classList.remove("next-prayer");
+});
+
+let el=document.getElementById("prayer-"+nextIndex);
+if(el) el.classList.add("next-prayer");
 
 let diff=next-current;
 
