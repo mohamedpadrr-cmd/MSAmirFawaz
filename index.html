@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شاشة جامع الأمير فواز - ضبط المسافات</title>
+    <title>شاشة جامع الأمير فواز - النسخة المطورة بالظلال</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         :root { 
             --gold-3d: #FFD700; 
             --gold-dark: #8B7500;
             --white: #F5F5F5; 
-            --text-shadow-deep: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            --bg-glass: rgba(0, 0, 0, 0.4); /* لون المربعات الشفافة */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         
@@ -23,33 +23,52 @@
             transform: rotate(90deg);
             width: 100vh; height: 100vw;
             display: flex; flex-direction: column;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), 
                         url("bg.png") center/cover no-repeat;
             position: absolute; border: 4px solid var(--gold-3d);
         }
 
-        /* 1. الجزء العلوي - تم إنزاله ليبتعد عن الإطار */
+        /* 1. الجزء العلوي - إضافة المربعات (الشادو) */
         .top-section {
-            height: 32vh; 
+            height: 35vh; 
             display: flex; flex-direction: column;
-            justify-content: flex-start; text-align: center;
-            padding-top: 8vh; /* زيادة المسافة من الأعلى ليبتعد عن الإطار */
+            align-items: center; text-align: center;
+            padding-top: 8vh;
         }
+
+        /* مربع خلفية الاسم والتاريخ */
+        .info-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 1.5vh 4vw;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 2vh;
+        }
+
         .mosque-name { 
-            font-family: 'Amiri', serif; font-size: 7.5vh; color: var(--white); 
-            text-shadow: 0 0 25px var(--gold-3d), 2px 2px 5px #000; 
+            font-family: 'Amiri', serif; font-size: 6.5vh; color: var(--white); 
+            text-shadow: 0 0 15px var(--gold-3d); 
         }
-        .date-info { 
-            font-size: 2.8vh; color: var(--gold-3d); font-weight: 700; margin-top: 1.5vh;
-            text-shadow: 2px 2px 4px #000;
+        .date-info { font-size: 2.5vh; color: var(--gold-3d); font-weight: 700; margin-top: 0.5vh; }
+
+        /* مربع خلفية الساعة */
+        .clock-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 1vh 5vw;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            display: flex; align-items: center; gap: 2vw;
         }
-        
-        .clock-area { display: flex; align-items: center; justify-content: center; gap: 2vw; margin-top: 3vh; }
+
         #clock { 
-            font-size: 16vh; font-weight: 900; color: var(--gold-3d); line-height: 0.8; 
-            text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9);
+            font-size: 15vh; font-weight: 900; color: var(--gold-3d); line-height: 1; 
+            text-shadow: 3px 3px 0px var(--gold-dark);
         }
-        #ampm { font-size: 5.5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 8px #000; }
+        #ampm { font-size: 5vh; color: var(--white); font-weight: 800; }
 
         /* 2. الجزء الأوسط: الأذكار */
         .zikr-section {
@@ -58,19 +77,18 @@
         }
         #zikr { 
             font-size: 7vh; font-weight: 800; color: var(--white); 
-            text-shadow: var(--text-shadow-deep); 
-            line-height: 1.3;
+            text-shadow: 3px 3px 10px #000; line-height: 1.3;
         }
 
-        /* 3. الجزء السفلي - تم رفعه للأعلى بمقدار إضافي (2 سم) */
+        /* 3. الجزء السفلي - مرتفع لزيادة المسافة عن الإطار السفلي */
         .prayer-section {
-            height: 55vh; 
+            height: 54vh; 
             display: flex; flex-direction: column;
             border-top: 4px solid var(--gold-3d); 
-            background: rgba(0, 0, 0, 0.45); 
-            backdrop-filter: blur(8px);
-            margin-top: -12vh; /* زيادة السحب للأعلى للابتعاد عن الحافة السفلية */
-            padding-bottom: 5vh; /* إضافة مساحة داخلية سفلية لرفع المحتوى */
+            background: rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(12px);
+            margin-top: -12vh; 
+            padding-bottom: 6vh; /* رفع المواقيت عن الحافة السفلية */
             position: relative;
             z-index: 10;
         }
@@ -80,31 +98,36 @@
             padding: 1.5vh; border-bottom: 2px solid var(--gold-3d);
             text-align: center;
         }
-        #timer-label { font-size: 3.5vh; color: var(--white); font-weight: 700; text-shadow: 2px 2px 4px #000; }
-        #timer { font-size: 8.5vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 4px; text-shadow: 3px 3px 6px #000; }
+        #timer-label { font-size: 3.5vh; color: var(--white); font-weight: 700; }
+        #timer { font-size: 8vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 4px; }
 
         .prayer-grid {
             flex: 1; display: grid; grid-template-columns: 1fr 1fr;
             padding: 2vh 0;
         }
         .prayer-col { display: flex; flex-direction: column; justify-content: space-around; }
-        .v-line { border-left: 2px solid rgba(255, 215, 0, 0.25); }
+        .v-line { border-left: 2px solid rgba(255, 215, 0, 0.2); }
 
         .prayer-item { display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; }
-        .p-name { font-size: 5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 5px #000; }
+        .p-name { font-size: 4.8vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 5px #000; }
         
         .p-val-box { display: flex; align-items: baseline; }
-        .p-val { font-size: 7vh; color: var(--gold-3d); font-weight: 900; text-shadow: 3px 3px 6px #000; }
-        .p-suf { font-size: 3.5vh; color: var(--white); margin-right: 10px; font-weight: 700; }
+        .p-val { font-size: 6.8vh; color: var(--gold-3d); font-weight: 900; text-shadow: 2px 2px 4px #000; }
+        .p-suf { font-size: 3vh; color: var(--white); margin-right: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <div class="main-container">
     <div class="top-section">
-        <div class="mosque-name">جامع الأمير فواز</div>
-        <div class="date-info"><span id="hijri">--</span> | <span id="miladi">--</span></div>
-        <div class="clock-area">
+        <!-- مربع الاسم والتاريخ -->
+        <div class="info-card">
+            <div class="mosque-name">جامع الأمير فواز</div>
+            <div class="date-info"><span id="hijri">--</span> | <span id="miladi">--</span></div>
+        </div>
+
+        <!-- مربع الساعة -->
+        <div class="clock-card">
             <div id="clock">00:00</div>
             <div id="ampm">--</div>
         </div>
@@ -166,7 +189,7 @@
             let ps = p.h*3600 + p.m*60;
             if(ps > cur) { next = ps; break; }
         }
-        if(!next) next = prayerData[0].h*3600 + prayerData[0].m*60 + 86400;
+        if(!next) next = prayerData.h*3600 + prayerData.m*60 + 86400;
         let diff = next - cur;
         let h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
         document.getElementById("timer").innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
