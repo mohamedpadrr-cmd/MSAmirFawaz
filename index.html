@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شاشة جامع الأمير فواز - النسخة المطورة بالظلال</title>
+    <title>شاشة جامع الأمير فواز - النسخة الشاملة</title>
     <link href="https://fonts.googleapis.com" rel="stylesheet">
     <style>
         :root { 
             --gold-3d: #FFD700; 
             --gold-dark: #8B7500;
             --white: #F5F5F5; 
-            --bg-glass: rgba(0, 0, 0, 0.4); /* لون المربعات الشفافة */
+            --glass-bg: rgba(0, 0, 0, 0.45);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         
@@ -28,69 +28,44 @@
             position: absolute; border: 4px solid var(--gold-3d);
         }
 
-        /* 1. الجزء العلوي - إضافة المربعات (الشادو) */
         .top-section {
-            height: 35vh; 
+            height: 38vh; 
             display: flex; flex-direction: column;
-            align-items: center; text-align: center;
-            padding-top: 8vh;
-        }
-
-        /* مربع خلفية الاسم والتاريخ */
-        .info-card {
-            background: var(--bg-glass);
+            background: var(--glass-bg); 
             backdrop-filter: blur(10px);
-            padding: 1.5vh 4vw;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 2vh;
+            border-bottom: 4px solid var(--gold-3d);
+            justify-content: center; text-align: center;
+            padding-top: 2vh;
         }
 
-        .mosque-name { 
-            font-family: 'Amiri', serif; font-size: 6.5vh; color: var(--white); 
-            text-shadow: 0 0 15px var(--gold-3d); 
-        }
-        .date-info { font-size: 2.5vh; color: var(--gold-3d); font-weight: 700; margin-top: 0.5vh; }
+        .mosque-name { font-family: 'Amiri', serif; font-size: 7.5vh; color: var(--white); text-shadow: 0 0 20px var(--gold-3d); }
+        .date-info { font-size: 2.8vh; color: var(--gold-3d); font-weight: 700; margin-top: 1vh; text-shadow: 2px 2px 4px #000; }
 
-        /* مربع خلفية الساعة */
-        .clock-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            padding: 1vh 5vw;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            display: flex; align-items: center; gap: 2vw;
-        }
+        .clock-area { display: flex; align-items: center; justify-content: center; gap: 2vw; margin-top: 2vh; }
+        #clock { font-size: 16vh; font-weight: 900; color: var(--gold-3d); line-height: 0.8; text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8); }
+        #ampm { font-size: 5.5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 8px #000; }
 
-        #clock { 
-            font-size: 15vh; font-weight: 900; color: var(--gold-3d); line-height: 1; 
-            text-shadow: 3px 3px 0px var(--gold-dark);
-        }
-        #ampm { font-size: 5vh; color: var(--white); font-weight: 800; }
-
-        /* 2. الجزء الأوسط: الأذكار */
+        /* منطقة الأذكار المحسنة */
         .zikr-section {
             flex: 1; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 0 5vw;
+            text-align: center; padding: 0 6vw;
         }
         #zikr { 
-            font-size: 7vh; font-weight: 800; color: var(--white); 
-            text-shadow: 3px 3px 10px #000; line-height: 1.3;
+            font-size: 6.5vh; font-weight: 800; color: var(--white); 
+            text-shadow: 3px 3px 15px #000; line-height: 1.4;
+            transition: opacity 0.8s ease-in-out; /* انتقال ناعم جداً */
+            opacity: 1;
         }
 
-        /* 3. الجزء السفلي - مرتفع لزيادة المسافة عن الإطار السفلي */
         .prayer-section {
-            height: 54vh; 
+            height: 52vh; 
             display: flex; flex-direction: column;
             border-top: 4px solid var(--gold-3d); 
-            background: rgba(0, 0, 0, 0.5); 
-            backdrop-filter: blur(12px);
-            margin-top: -12vh; 
-            padding-bottom: 6vh; /* رفع المواقيت عن الحافة السفلية */
-            position: relative;
-            z-index: 10;
+            background: var(--glass-bg); 
+            backdrop-filter: blur(10px);
+            margin-top: -10vh; 
+            padding-bottom: 5vh; 
+            position: relative; z-index: 10;
         }
 
         .next-prayer-box {
@@ -99,42 +74,33 @@
             text-align: center;
         }
         #timer-label { font-size: 3.5vh; color: var(--white); font-weight: 700; }
-        #timer { font-size: 8vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 4px; }
+        #timer { font-size: 8.5vh; color: var(--gold-3d); font-weight: 900; letter-spacing: 4px; }
 
-        .prayer-grid {
-            flex: 1; display: grid; grid-template-columns: 1fr 1fr;
-            padding: 2vh 0;
-        }
+        .prayer-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; padding: 1vh 0; }
         .prayer-col { display: flex; flex-direction: column; justify-content: space-around; }
-        .v-line { border-left: 2px solid rgba(255, 215, 0, 0.2); }
+        .v-line { border-left: 2px solid rgba(255, 215, 0, 0.25); }
 
         .prayer-item { display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; }
-        .p-name { font-size: 4.8vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 5px #000; }
-        
+        .p-name { font-size: 5vh; color: var(--white); font-weight: 800; text-shadow: 2px 2px 5px #000; }
         .p-val-box { display: flex; align-items: baseline; }
-        .p-val { font-size: 6.8vh; color: var(--gold-3d); font-weight: 900; text-shadow: 2px 2px 4px #000; }
-        .p-suf { font-size: 3vh; color: var(--white); margin-right: 10px; font-weight: 700; }
+        .p-val { font-size: 7vh; color: var(--gold-3d); font-weight: 900; text-shadow: 3px 3px 6px #000; }
+        .p-suf { font-size: 3.5vh; color: var(--white); margin-right: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <div class="main-container">
     <div class="top-section">
-        <!-- مربع الاسم والتاريخ -->
-        <div class="info-card">
-            <div class="mosque-name">جامع الأمير فواز</div>
-            <div class="date-info"><span id="hijri">--</span> | <span id="miladi">--</span></div>
-        </div>
-
-        <!-- مربع الساعة -->
-        <div class="clock-card">
+        <div class="mosque-name">جامع الأمير فواز</div>
+        <div class="date-info"><span id="hijri">--</span> | <span id="miladi">--</span></div>
+        <div class="clock-area">
             <div id="clock">00:00</div>
             <div id="ampm">--</div>
         </div>
     </div>
 
     <div class="zikr-section">
-        <div id="zikr">أستغفر الله العظيم وأتوب إليه</div>
+        <div id="zikr">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
     </div>
 
     <div class="prayer-section">
@@ -155,7 +121,59 @@
         {n: "العصر", h: 15, m: 34}, {n: "المغرب", h: 18, m: 6}, {n: "العشاء", h: 19, m: 31}
     ];
 
-    const azkar = ["سبحان الله وبحمده، سبحان الله العظيم", "اللهم صلِّ وسلم على نبينا محمد", "لا حول ولا قوة إلا بالله العلي العظيم", "أستغفر الله العظيم وأتوب إليه"];
+    const azkar = [
+        "سبحان الله وبحمده، سبحان الله العظيم",
+        "اللهم صلِّ وسلم على نبينا محمد",
+        "لا حول ولا قوة إلا بالله العلي العظيم",
+        "أستغفر الله العظيم وأتوب إليه",
+        "قال ﷺ: كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ ثَقِيلَتَانِ فِي الْمِيزَانِ..",
+        "سبحان الله والحمد لله ولا إله إلا الله والله أكبر",
+        "يا حي يا قيوم برحمتك أستغيث",
+        "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد",
+        "اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك",
+        "قال ﷺ: من صلى عليّ صلاة صلى الله عليه بها عشراً",
+        "اللهم إني أسألك علماً نافعاً ورزقاً طيباً",
+        "رضيت بالله رباً وبالإسلام ديناً وبمحمد نبياً",
+        "اللهم عافني في بدني، اللهم عافني في سمعي",
+        "قال ﷺ: بلغوا عني ولو آية",
+        "اللهم إنك عفو تحب العفو فاعف عني",
+        "حسبي الله لا إله إلا هو عليه توكلت",
+        "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء",
+        "قال ﷺ: خيركم من تعلم القرآن وعلمه",
+        "اللهم إني أعوذ بك من الهم والحزن والعجز والكسل",
+        "لا إله إلا أنت سبحانك إني كنت من الظالمين",
+        "يا مقلب القلوب ثبت قلبي على دينك",
+        "رب اغفر لي ولوالدي وللمؤمنين والمؤمنات",
+        "قال ﷺ: الطهور شطر الإيمان",
+        "الحمد لله حمداً كثيراً طيباً مباركاً فيه",
+        "اللهم قني عذابك يوم تبعث عبادك",
+        "قال ﷺ: اتقوا النار ولو بشق تمرة",
+        "اللهم اجعل في قلبي نوراً وفي بصري نوراً",
+        "قال ﷺ: الدين النصيحة",
+        "أعوذ بكلمات الله التامات من شر ما خلق",
+        "اللهم بارك لنا فيما رزقتنا وقنا عذاب النار",
+        "قال ﷺ: المسلم من سلم المسلمون من لسانه ويده",
+        "سبحان الله عدد خلقه ورضا نفسه وزنة عرشه",
+        "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت",
+        "قال ﷺ: تهادوا تحابوا",
+        "اللهم رب السماوات ورب الأرض ورب العرش العظيم",
+        "قال ﷺ: إذا قامت الساعة وفِي يد أحدكم فسيلة فليغرسها",
+        "اللهم أعنا على ذكرك وشكرك وحسن عبادتك",
+        "قال ﷺ: سيد الاستغفار أن تقول اللهم أنت ربي..",
+        "يا ذا الجلال والإكرام",
+        "اللهم إنا نسألك الجنة ونعوذ بك من النار",
+        "قال ﷺ: من سلك طريقاً يلتمس فيه علماً سهل الله له طريقاً إلى الجنة",
+        "اللهم احفظنا بحفظك يا أرحم الراحمين",
+        "قال ﷺ: الصبر ضياء",
+        "اللهم اكفني بحلالك عن حرامك وأغنني بفضلك عمن سواك",
+        "اللهم آتنا في الدنيا حسنة وفي الآخرة حسنة",
+        "قال ﷺ: ليس الغنى عن كثرة العرض ولكن الغنى غنى النفس",
+        "سبحان الله وبحمده مائة مرة",
+        "اللهم اغفر للمسلمين والمسلمات والأحياء منهم والأموات",
+        "قال ﷺ: من قال سبحان الله العظيم وبحمده غرست له نخلة في الجنة",
+        "اللهم أصلح لي ديني الذي هو عصمة أمري",
+        "اللهم إني أسألك الهدى والتقى والعفاف والغنى"
+    ];
 
     function fmt12(h, m) {
         let s = h >= 12 ? "م" : "ص";
@@ -189,18 +207,24 @@
             let ps = p.h*3600 + p.m*60;
             if(ps > cur) { next = ps; break; }
         }
-        if(!next) next = prayerData.h*3600 + prayerData.m*60 + 86400;
+        if(!next) next = prayerData[0].h*3600 + prayerData[0].m*60 + 86400;
         let diff = next - cur;
         let h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
         document.getElementById("timer").innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
     init(); update(); setInterval(update, 1000);
-    let z = 0; setInterval(() => { 
+
+    // نظام تبديل الأذكار المطور لمنع الاختفاء
+    let z = 0; 
+    setInterval(() => { 
         const zElem = document.getElementById("zikr");
-        zElem.style.opacity = 0;
-        setTimeout(() => { zElem.innerText = azkar[++z % azkar.length]; zElem.style.opacity = 1; }, 15000);
-    }, 16000);
+        zElem.style.opacity = 0; // يبدأ بالاختفاء التدريجي
+        setTimeout(() => { 
+            zElem.innerText = azkar[++z % azkar.length]; 
+            zElem.style.opacity = 1; // يظهر النص الجديد
+        }, 800); // سرعة الانتقال
+    }, 15000); // تغيير كل 15 ثانية
 </script>
 </body>
 </html>
