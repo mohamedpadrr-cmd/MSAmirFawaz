@@ -9,7 +9,7 @@
 <style>
 
 :root{
---gold:#FFD700;
+--gold:#D4AF37;
 --white:#F5F5F5;
 --glass:rgba(0,0,0,0.45);
 }
@@ -30,8 +30,6 @@ display:flex;
 align-items:center;
 justify-content:center;
 }
-
-/* الحاوية */
 
 .main-container{
 transform:rotate(90deg);
@@ -64,7 +62,7 @@ background:var(--glass);
 backdrop-filter:blur(10px);
 padding:2vh 4vw;
 border-radius:30px;
-border:2px solid rgba(255,215,0,.5);
+border:2px solid rgba(212,175,55,.6);
 text-align:center;
 }
 
@@ -75,7 +73,7 @@ background:var(--glass);
 backdrop-filter:blur(10px);
 padding:3vh 5vw;
 border-radius:30px;
-border:2px solid rgba(255,215,0,.5);
+border:2px solid rgba(212,175,55,.6);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -85,12 +83,12 @@ gap:2vw;
 .mosque-name{
 font-size:7.5vh;
 color:white;
-text-shadow:0 0 20px gold;
+text-shadow:0 0 20px var(--gold);
 }
 
 .date-info{
 font-size:2.8vh;
-color:gold;
+color:var(--gold);
 font-weight:700;
 margin-top:1vh;
 }
@@ -100,8 +98,9 @@ margin-top:1vh;
 #clock{
 font-size:16vh;
 font-weight:900;
-color:gold;
+color:var(--gold);
 line-height:1;
+text-shadow:0 0 10px #000,0 0 20px #000;
 }
 
 #ampm{
@@ -136,7 +135,7 @@ transition:opacity .7s;
 height:52vh;
 display:flex;
 flex-direction:column;
-border-top:4px solid gold;
+border-top:4px solid var(--gold);
 background:rgba(0,0,0,.45);
 backdrop-filter:blur(10px);
 margin-top:-10vh;
@@ -146,10 +145,10 @@ padding-bottom:5vh;
 /* الصلاة القادمة */
 
 .next-prayer-box{
-background:rgba(255,215,0,.15);
+background:rgba(212,175,55,.15);
 padding:1.5vh;
 text-align:center;
-border-bottom:2px solid gold;
+border-bottom:2px solid var(--gold);
 }
 
 #timer-label{
@@ -159,7 +158,7 @@ color:white;
 
 #timer{
 font-size:8vh;
-color:gold;
+color:var(--gold);
 font-weight:900;
 letter-spacing:3px;
 }
@@ -179,7 +178,7 @@ justify-content:space-around;
 }
 
 .v-line{
-border-left:2px solid rgba(255,215,0,.25);
+border-left:2px solid rgba(212,175,55,.3);
 }
 
 .prayer-item{
@@ -204,8 +203,9 @@ white-space:nowrap;
 
 .p-val{
 font-size:7vh;
-color:gold;
+color:var(--gold);
 font-weight:900;
+text-shadow:0 0 8px #000;
 }
 
 .p-suf{
