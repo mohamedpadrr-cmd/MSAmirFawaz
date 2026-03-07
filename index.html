@@ -1,332 +1,160 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شاشة المسجد</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-
-<style>
-
-:root{
---gold:#d4af37;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Tajawal',sans-serif;
-}
-
-body{
-
-height:100vh;
-width:100vw;
-
-background:
-linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
-url("https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?q=80&w=2000") center/cover;
-
-color:white;
-
-display:flex;
-flex-direction:column;
-
-}
-
-/* الشريط العلوي */
-
-.top{
-
-height:8vh;
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-padding:0 3vw;
-
-border-bottom:2px solid var(--gold);
-
-font-size:2.2vh;
-color:var(--gold);
-font-weight:700;
-
-}
-
-/* اسم المسجد */
-
-.mosque{
-
-text-align:center;
-font-size:3.5vh;
-font-weight:900;
-margin-top:1vh;
-
-}
-
-/* الساعة */
-
-.clockBox{
-
-text-align:center;
-
-margin-top:4vh;
-
-}
-
-#clock{
-
-font-size:14vh;
-font-weight:900;
-color:var(--gold);
-
-}
-
-#ampm{
-
-font-size:4vh;
-
-}
-
-/* الصلاة القادمة */
-
-.next{
-
-text-align:center;
-margin-top:2vh;
-
-}
-
-.nextTitle{
-
-font-size:3vh;
-
-}
-
-#nextName{
-
-font-size:5vh;
-color:var(--gold);
-font-weight:900;
-
-}
-
-#countdown{
-
-font-size:4vh;
-margin-top:1vh;
-
-}
-
-/* الأذكار */
-
-.zikr{
-
-flex:1;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-text-align:center;
-
-padding:3vh 3vw;
-
-font-size:4.5vh;
-font-weight:700;
-line-height:1.6;
-
-text-shadow:0 0 20px black;
-
-}
-
-/* جدول الصلوات */
-
-.prayers{
-
-height:25vh;
-
-display:grid;
-grid-template-columns:repeat(3,1fr);
-grid-template-rows:repeat(2,1fr);
-
-background:rgba(0,0,0,.75);
-
-border-top:3px solid var(--gold);
-
-}
-
-.p{
-
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-
-border:1px solid rgba(255,255,255,.15);
-
-}
-
-.p.active{
-
-background:rgba(212,175,55,.25);
-
-}
-
-.pname{
-
-font-size:3vh;
-
-}
-
-.ptime{
-
-font-size:5vh;
-color:var(--gold);
-font-weight:900;
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شاشة المسجد - الوضع الطولي</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+
+        body {
+            background: #000;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* حاوية التدوير */
+        .rotate-wrapper {
+            transform: rotate(90deg); /* تدوير 90 درجة */
+            width: 100vh; /* العرض يصبح الارتفاع */
+            height: 100vw; /* الارتفاع يصبح العرض */
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+                        url("https://images.unsplash.com") center/cover;
+            color: white;
+            position: absolute;
+        }
+
+        .top {
+            height: 8vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4vw;
+            border-bottom: 2px solid var(--gold);
+            font-size: 3vh;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .mosque { text-align: center; font-size: 5vh; font-weight: 900; margin-top: 3vh; }
+
+        .clockBox { text-align: center; margin-top: 5vh; }
+        #clock { font-size: 22vh; font-weight: 900; color: var(--gold); line-height: 1; }
+        #ampm { font-size: 6vh; display: block; margin-top: 1vh; }
+
+        .next { text-align: center; margin-top: 4vh; }
+        .nextTitle { font-size: 4vh; }
+        #nextName { font-size: 7vh; color: var(--gold); font-weight: 900; }
+        #countdown { font-size: 5vh; margin-top: 1vh; color: #eee; }
+
+        .zikr {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5vw;
+            font-size: 6vh;
+            font-weight: 700;
+            line-height: 1.4;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* جدول الصلوات بالأسفل */
+        .prayers {
+            height: 22vh;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* 6 أعمدة لكل الصلوات */
+            background: rgba(0,0,0,.8);
+            border-top: 4px solid var(--gold);
+        }
+
+        .p {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-left: 1px solid rgba(255,255,255,.1);
+        }
+
+        .pname { font-size: 3.5vh; margin-bottom: 1vh; color: #ccc; }
+        .ptime { font-size: 5.5vh; color: var(--gold); font-weight: 900; }
+    </style>
 </head>
-
 <body>
 
-<div class="top">
+<div class="rotate-wrapper">
+    <div class="top">
+        <div id="hijri"></div>
+        <div id="miladi"></div>
+    </div>
 
-<div id="hijri"></div>
+    <div class="mosque">جامع الأمير فواز – جدة</div>
 
-<div id="miladi"></div>
+    <div class="clockBox">
+        <div id="clock">00:00</div>
+        <div id="ampm">--</div>
+    </div>
 
+    <div class="next">
+        <div class="nextTitle">الصلاة القادمة</div>
+        <div id="nextName">--</div>
+        <div id="countdown">00:00:00</div>
+    </div>
+
+    <div class="zikr" id="zikr">سبحان الله وبحمده</div>
+
+    <div class="prayers" id="prayers">
+        <!-- سيتم تعبئتها بواسطة JS -->
+    </div>
 </div>
-
-<div class="mosque">
-
-جامع الأمير فواز – جدة
-
-</div>
-
-<div class="clockBox">
-
-<div id="clock">00:00</div>
-
-<div id="ampm"></div>
-
-</div>
-
-<div class="next">
-
-<div class="nextTitle">الصلاة القادمة</div>
-
-<div id="nextName">--</div>
-
-<div id="countdown">00:00:00</div>
-
-</div>
-
-<div class="zikr" id="zikr"></div>
-
-<div class="prayers" id="prayers"></div>
 
 <script>
+    const prayerTimes = [
+        {name: "الفجر", time: "05:21"},
+        {name: "الشروق", time: "06:38"},
+        {name: "الظهر", time: "12:31"},
+        {name: "العصر", time: "15:52"},
+        {name: "المغرب", time: "18:24"},
+        {name: "العشاء", time: "19:54"}
+    ];
 
-/* مواقيت الصلاة */
+    const prayersBox = document.getElementById("prayers");
+    prayerTimes.forEach(p => {
+        let div = document.createElement("div");
+        div.className = "p";
+        div.innerHTML = `<div class='pname'>${p.name}</div><div class='ptime'>${p.time}</div>`;
+        prayersBox.appendChild(div);
+    });
 
-const prayerTimes=[
-{name:"الفجر",time:"05:21"},
-{name:"الشروق",time:"06:38"},
-{name:"الظهر",time:"12:31"},
-{name:"العصر",time:"15:52"},
-{name:"المغرب",time:"18:24"},
-{name:"العشاء",time:"19:54"}
-];
+    function updateClock() {
+        let now = new Date();
+        let h12 = now.getHours() % 12 || 12;
+        let m = String(now.getMinutes()).padStart(2, "0");
+        document.getElementById("clock").innerText = h12 + ":" + m;
+        document.getElementById("ampm").innerText = now.getHours() >= 12 ? "مساءً" : "صباحاً";
+        document.getElementById("miladi").innerText = now.toLocaleDateString("en", {weekday: "long", year: "numeric", month: "long", day: "numeric"});
+        document.getElementById("hijri").innerText = new Intl.DateTimeFormat("ar-SA-u-ca-islamic", {day: "numeric", month: "long", year: "numeric", weekday: "long"}).format(now);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-/* إنشاء الجدول */
-
-const prayersBox=document.getElementById("prayers");
-
-prayerTimes.forEach(p=>{
-
-let div=document.createElement("div");
-
-div.className="p";
-
-div.innerHTML=
-"<div class='pname'>"+p.name+"</div>"+
-"<div class='ptime'>"+p.time+"</div>";
-
-prayersBox.appendChild(div);
-
-});
-
-/* الساعة والتاريخ */
-
-function updateClock(){
-
-let now=new Date();
-
-let h=now.getHours();
-let m=now.getMinutes();
-
-let ampm=h>=12?"مساءً":"صباحاً";
-
-let h12=h%12||12;
-
-document.getElementById("clock").innerText=
-h12+":"+String(m).padStart(2,"0");
-
-document.getElementById("ampm").innerText=ampm;
-
-document.getElementById("miladi").innerText=
-now.toLocaleDateString("en",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
-
-document.getElementById("hijri").innerText=
-new Intl.DateTimeFormat("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric",weekday:"long"}).format(now);
-
-}
-
-setInterval(updateClock,1000);
-
-updateClock();
-
-/* الأذكار */
-
-const azkar=[
-
-"سبحان الله وبحمده سبحان الله العظيم",
-
-"لا إله إلا الله وحده لا شريك له له الملك وله الحمد",
-
-"أستغفر الله العظيم وأتوب إليه",
-
-"اللهم صل وسلم على نبينا محمد",
-
-"سبحان الله والحمد لله والله أكبر"
-
-];
-
-let zi=0;
-
-function changeZikr(){
-
-document.getElementById("zikr").innerText=azkar[zi];
-
-zi=(zi+1)%azkar.length;
-
-}
-
-changeZikr();
-
-setInterval(changeZikr,20000);
-
+    const azkar = ["سبحان الله وبحمده سبحان الله العظيم", "لا إله إلا الله وحده لا شريك له", "أستغفر الله العظيم وأتوب إليه", "اللهم صل وسلم على نبينا محمد"];
+    let zi = 0;
+    setInterval(() => {
+        document.getElementById("zikr").innerText = azkar[zi];
+        zi = (zi + 1) % azkar.length;
+    }, 15000);
 </script>
 
 </body>
-
 </html>
