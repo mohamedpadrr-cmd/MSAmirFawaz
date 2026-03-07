@@ -59,19 +59,19 @@ display:flex; align-items:center; gap:1.5vw;
 #clock{ font-size:9vh; font-weight:900; color:var(--gold); text-shadow:0 0 10px #000; }
 #ampm{ font-size:3.2vh; color:white; }
 
-/* قسم الأحاديث - تم تكبير الخط هنا */
+/* قسم الأحاديث */
 .zikr-section{
 flex: 1; 
 display:flex; align-items:center; justify-content:center;
 padding: 0 6vw;
 }
 #zikr{ 
-font-size:4.2vh; /* تكبير حجم الخط للأحاديث */
+font-size:4.2vh; 
 font-weight:800; 
 color:white; 
 text-shadow:2px 2px 20px black; 
 text-align:center; 
-line-height: 1.4; /* ضبط تباعد الأسطر */
+line-height: 1.4;
 transition: opacity 1s;
 }
 
@@ -91,11 +91,12 @@ padding:0.5vh; text-align:center;
 border-bottom:1px solid var(--gold);
 margin-bottom: 0.5vh;
 }
-#timer-label{ font-size:2.5vh; color:white; }
-#timer{ font-size:5vh; color:var(--gold); font-weight:900; }
+#timer-label{ font-size:2.8vh; color:white; }
+#timer{ font-size:6vh; color:var(--gold); font-weight:900; }
 
-.iqama-mode { background: rgba(0, 255, 204, 0.15) !important; }
-.iqama-mode #timer { color: var(--iqama-color) !important; text-shadow: 0 0 15px var(--iqama-color); }
+.iqama-mode { background: rgba(0, 255, 204, 0.2) !important; }
+.iqama-mode #timer { color: var(--iqama-color) !important; text-shadow: 0 0 20px var(--iqama-color); }
+.iqama-mode #timer-label { color: var(--iqama-color) !important; }
 
 .prayer-header {
 display: grid; grid-template-columns: 1.5fr 1fr 1fr;
@@ -118,9 +119,9 @@ text-align: center;
 border-radius: 10px;
 }
 
-.p-name{ font-size:3.6vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
-.p-val{ font-size:4vh; color:var(--gold); font-weight:900; }
-.iqama-val { font-size:3.6vh; color: var(--iqama-color); font-weight: 800; }
+.p-name{ font-size:3.8vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
+.p-val{ font-size:4.2vh; color:var(--gold); font-weight:900; }
+.iqama-val { font-size:3.8vh; color: var(--iqama-color); font-weight: 800; }
 
 .next-prayer{ 
 background:rgba(212,175,55,0.25); 
@@ -177,33 +178,10 @@ const azkar=[
     "قَالَ ﷺ: «مَنْ بَنَى مَسْجِدًا لِلَّهِ بَنَى اللَّهُ لَهُ فِي الْجَنَّةِ مِثْلَهُ» [رواه مسلم]",
     "قَالَ ﷺ: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ ثَقِيلَتَانِ فِي الْمِيزَانِ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ» [البخاري]",
     "قَالَ ﷺ: «أَحَبُّ الْكَلامِ إِلَى اللَّهِ أَرْبَعٌ: سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلا إِلَهَ إِلا اللَّهُ وَاللَّهُ أَكْبَرُ» [رواه مسلم]",
-    "قَالَ ﷺ: «مَنْ صَلَّى عَلَيَّ صَلاةً صَلَّى اللَّهُ عَلَيْهِ بِهَا عَشْرًا» [رواه مسلم]",
-    "قَالَ ﷺ: «الدُّعَاءُ لا يُرَدُّ بَيْنَ الأَذَانِ وَالإِقَامَةِ» [رواه الترمذي وصححه الألباني]",
-    "قَالَ ﷺ: «مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ» [رواه مسلم]",
-    "قَالَ ﷺ: «بُنِيَ الإِسْلامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لا إِلَهَ إِلا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ...» [متفق عليه]",
+    "قَالَ ﷺ: «الدُّعَاءُ لا يُرَدُّ بَيْنَ الأَذَانِ وَالإِقَامَةِ» [رواه الترمذي]",
     "قَالَ ﷺ: «خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ» [رواه البخاري]",
-    "قَالَ ﷺ: «مَنْ قَرَأَ آيَةَ الْكُرْسِيِّ دُبُرَ كُلِّ صَلاةٍ مَكْتُوبَةٍ لَمْ يَمْنَعْهُ مِنْ دُخُولِ الْجَنَّةِ إِلا الْمَوْتُ» [صحيح الجامع]",
-    "قَالَ ﷺ: «أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ» [رواه البخاري ومسلم]",
-    "قَالَ ﷺ: «مَا مِنْ مُسْلِمٍ يَتَوَضَّأُ فَيُحْسِنُ الْوُضُوءَ ثُمَّ يُصَلِّي رَكْعَتَيْنِ... إِلا وَجَبَتْ لَهُ الْجَنَّةُ» [رواه مسلم]",
-    "قَالَ ﷺ: «لا يَزَالُ لِسَانُكَ رَطْبًا مِنْ ذِكْرِ اللَّهِ» [رواه الترمذي]",
-    "قَالَ ﷺ: «اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ» [الترمذي]",
-    "قَالَ ﷺ: «الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ» [رواه مسلم]",
-    "قَالَ ﷺ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى» [رواه البخاري ومسلم]",
-    "قَالَ ﷺ: «تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ» [رواه الترمذي وصححه الألباني]",
-    "قَالَ ﷺ: «مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ» [رواه البخاري ومسلم]",
-    "قَالَ ﷺ: «لأَنْ أَقُولَ سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلا إِلَهَ إِلا اللَّهُ، وَاللَّهُ أَكْبَرُ، أَحَبُّ إِلَيَّ مِمَّا طَلَعَتْ عَلَيْهِ الشَّمْسُ» [مسلم]",
-    "قَالَ ﷺ: «مَنْ تَوَضَّأَ نَحْوَ وُضُوئِي هَذَا ثُمَّ صَلَّى رَكْعَتَيْنِ لا يُحَدِّثُ فِيهِمَا نَفْسَهُ غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ» [البخاري]",
-    "قَالَ ﷺ: «عَلَيْكُمْ بِالصِّدْقِ، فَإِنَّ الصِّدْقَ يَهْدِي إِلَى الْبِرِّ، وَإِنَّ الْبِرَّ يَهْدِي إِلَى الْجَنَّةِ» [رواه البخاري ومسلم]",
-    "قَالَ ﷺ: «مَنْ غَسَّلَ يَوْمَ الْجُمُعَةِ وَاغْتَسَلَ ثُمَّ بَكَّرَ وَابْتَكَرَ... كَانَ لَهُ بِكُلِّ خُطْوَةٍ عَمَلُ سَنَةٍ» [رواه أحمد]",
-    "قَالَ ﷺ: «إِنَّ اللَّهَ وَمَلائِكَتَهُ يُصَلُّونَ عَلَى الصَّفِّ الأَوَّلِ» [رواه أبو داود وصححه الألباني]",
-    "قَالَ ﷺ: «مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ، وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا» [رواه الترمذي]",
-    "قَالَ ﷺ: «الطُّهُورُ شَطْرُ الإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلأُ الْمِيزَانَ» [رواه مسلم]",
-    "قَالَ ﷺ: «مَنْ صَلَّى الْعِشَاءَ فِي جَمَاعَةٍ فَكَأَنَّمَا قَامَ نِصْفَ اللَّيْلِ، وَمَنْ صَلَّى الصُّبْحَ فِي جَمَاعَةٍ فَكَأَنَّمَا صَلَّى اللَّيْلَ كُلَّهُ» [مسلم]",
-    "قَالَ ﷺ: «أَلا أَدُلُّكُمْ عَلَى مَا يَمْحُو اللَّهُ بِهِ الْخَطَايَا وَيَرْفَعُ بِهِ الدَّرَجَاتِ؟ إِسْبَاغُ الْوُضُوءِ عَلَى الْمَكَارِهِ...» [مسلم]",
-    "قَالَ ﷺ: «مَنْ قَالَ سُبْحَانَ اللَّهِ وَبِحَمْدِهِ فِي يَوْمٍ مِائَةَ مَرَّةٍ حُطَّتْ خَطَايَاهُ وَإِنْ كَانَتْ مِثْلَ زَبَدِ الْبَحْرِ» [البخاري ومسلم]",
-    "قَالَ ﷺ: «لا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ» [رواه البخاري ومسلم]",
-    "قَالَ ﷺ: «بَشِّرِ الْمَشَّائِينَ فِي الظُّلَمِ إِلَى الْمَسَاجِدِ بِالنُّورِ التَّامِّ يَوْمَ الْقِيَامَةِ» [رواه الترمذي]",
-    "قَالَ ﷺ: «مَنْ تَوَضَّأَ فَأَحْسَنَ الْوُضُوءَ خَرَجَتْ خَطَايَاهُ مِنْ جَسَدِهِ حَتَّى تَخْرُجَ مِنْ تَحْتِ أَظْفَارِهِ» [رواه مسلم]"
+    "قَالَ ﷺ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى» [البخاري ومسلم]",
+    "قَالَ ﷺ: «لا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ» [البخاري ومسلم]"
 ];
 
 function formatTime(h, m) {
@@ -213,8 +191,8 @@ function formatTime(h, m) {
 
 function calculateIqama(h, m, offset) {
     if (offset === 0) return "--:--";
-    let total = h * 60 + m + offset;
-    return formatTime(Math.floor(total / 60) % 24, total % 60);
+    let totalMins = h * 60 + m + offset;
+    return formatTime(Math.floor(totalMins/60)%24, totalMins%60);
 }
 
 function init(){
@@ -243,17 +221,37 @@ function update(){
 
     let currentS = h * 3600 + m * 60 + s;
     let nextIdx = -1;
-    let isIqamaMode = false;
-    let iqamaRemaining = 0;
+    let isIqama = false;
+    let remainingS = 0;
 
+    // فحص وقت الإقامة أولاً
     for(let i=0; i<prayerData.length; i++){
         let pS = prayerData[i].h * 3600 + prayerData[i].m * 60;
         let iqamaS = pS + (prayerData[i].iqama * 60);
         if(currentS >= pS && currentS < iqamaS && prayerData[i].iqama > 0){
-            isIqamaMode = true;
-            iqamaRemaining = iqamaS - currentS;
+            isIqama = true;
+            remainingS = iqamaS - currentS;
             nextIdx = i;
             break;
+        }
+    }
+
+    // إذا لم نكن في وقت إقامة، نبحث عن الصلاة القادمة
+    if(!isIqama){
+        let found = false;
+        for(let i=0; i<prayerData.length; i++){
+            let pS = prayerData[i].h * 3600 + prayerData[i].m * 60;
+            if(pS > currentS){
+                remainingS = pS - currentS;
+                nextIdx = i;
+                found = true;
+                break;
+            }
+        }
+        if(!found){ // صلاة الفجر لليوم التالي
+            let fS = prayerData[0].h * 3600 + prayerData[0].m * 60;
+            remainingS = (86400 - currentS) + fS;
+            nextIdx = 0;
         }
     }
 
@@ -261,31 +259,19 @@ function update(){
     const tDisp = document.getElementById("timer");
     const tBox = document.getElementById("timerBox");
 
-    if(isIqamaMode){
+    if(isIqama){
         tBox.classList.add("iqama-mode");
-        tLabel.innerText = "متبقي على الإقامة: ";
-        let mm = Math.floor(iqamaRemaining / 60);
-        let ss = iqamaRemaining % 60;
-        tDisp.innerText = `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+        tLabel.innerText = "متبقي على الإقامة";
     } else {
         tBox.classList.remove("iqama-mode");
-        tLabel.innerText = "الصلاة القادمة بعد: ";
-        let nextS = 0;
-        for(let i=0; i<prayerData.length; i++){
-            let ps = prayerData[i].h * 3600 + prayerData[i].m * 60;
-            if(ps > currentS){ nextS = ps; nextIdx = i; break; }
-        }
-        if(nextS === 0){ nextS = (prayerData.h * 3600 + prayerData.m * 60) + 86400; nextIdx = 0; }
-        let diff = nextS - currentS;
-        let hh = Math.floor(diff/3600), mm = Math.floor((diff%3600)/60), ss = diff%60;
-        tDisp.innerText = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+        tLabel.innerText = "الصلاة القادمة بعد";
     }
 
+    let hh = Math.floor(remainingS/3600), mm = Math.floor((remainingS%3600)/60), ss = remainingS%60;
+    tDisp.innerText = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
+
     document.querySelectorAll(".prayer-item").forEach(el => el.classList.remove("next-prayer"));
-    if(nextIdx !== -1) {
-        const target = document.getElementById("prayer-"+nextIdx);
-        if(target) target.classList.add("next-prayer");
-    }
+    if(nextIdx !== -1) document.getElementById("prayer-"+nextIdx).classList.add("next-prayer");
 }
 
 init(); update(); setInterval(update, 1000);
@@ -298,7 +284,7 @@ setInterval(()=>{
         el.innerText=azkar[z]; 
         el.style.opacity=1; 
     },1000); 
-},30000); 
+},30000);
 </script>
 </body>
 </html>
