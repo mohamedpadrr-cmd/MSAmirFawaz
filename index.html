@@ -8,7 +8,7 @@
 :root{
 --gold:#D4AF37;
 --white:#F5F5F5;
---glass:rgba(0,0,0,0.4);
+--glass:rgba(0,0,0,0.35);
 --iqama-color: #00FFCC;
 }
 
@@ -64,37 +64,36 @@ display:flex; align-items:center; gap:1.5vw;
 flex: 1; 
 display:flex; align-items:center; justify-content:center;
 }
-#zikr{ font-size:4.5vh; font-weight:700; color:white; text-shadow:2px 2px 10px black; text-align:center; padding:0 8vw; }
+#zikr{ font-size:4.2vh; font-weight:700; color:white; text-shadow:2px 2px 10px black; text-align:center; padding:0 8vw; }
 
-/* قسم الصلوات المعدل ليظهر بالكامل */
+/* قسم الصلوات في الأسفل */
 .prayer-section{
 width: 100%;
 display:flex; flex-direction:column;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(12px);
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(15px);
 border-top:3px solid var(--gold);
-padding-bottom: 2vh; /* مساحة أمان بالأسفل */
+padding-bottom: 1.5vh;
 }
 
 .next-prayer-box{
-background:rgba(212,175,55,0.2);
-padding:1vh; text-align:center;
+background:rgba(212,175,55,0.15);
+padding:0.5vh; text-align:center;
 border-bottom:1px solid var(--gold);
-margin-bottom: 1vh;
+margin-bottom: 0.5vh;
 }
-#timer-label{ font-size:2.8vh; color:white; }
-#timer{ font-size:5.5vh; color:var(--gold); font-weight:900; }
+#timer-label{ font-size:2.5vh; color:white; }
+#timer{ font-size:5vh; color:var(--gold); font-weight:900; }
 
 .prayer-header {
 display: grid; grid-template-columns: 1.5fr 1fr 1fr;
 padding: 0.5vh 5vw; color: var(--gold);
-font-size: 2.4vh; font-weight: bold; text-align: center;
-opacity: 0.9;
+font-size: 2.2vh; font-weight: bold; text-align: center;
 }
 
 .prayer-grid{ 
 display:flex; flex-direction: column; 
-gap: 0.5vh; /* تقليل المسافة بين الصفوف */
+gap: 2px;
 padding: 0 3vw;
 }
 
@@ -102,14 +101,14 @@ padding: 0 3vw;
 display: grid; 
 grid-template-columns: 1.5fr 1fr 1fr; 
 align-items:center; 
-padding: 0.8vh 2vw; 
+padding: 0.6vh 2vw; 
 text-align: center; 
-border-radius: 12px;
+border-radius: 10px;
 }
 
-.p-name{ font-size:3.8vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
-.p-val{ font-size:4.2vh; color:var(--gold); font-weight:900; }
-.iqama-val { font-size:3.8vh; color: var(--iqama-color); font-weight: 800; }
+.p-name{ font-size:3.6vh; color:white; font-weight:800; text-align: right; padding-right: 5vw; }
+.p-val{ font-size:4vh; color:var(--gold); font-weight:900; }
+.iqama-val { font-size:3.6vh; color: var(--iqama-color); font-weight: 800; }
 
 .next-prayer{ 
 background:rgba(212,175,55,0.25); 
@@ -182,7 +181,7 @@ function init(){
         container.innerHTML += `
             <div class="prayer-item" id="prayer-${i}">
                 <div class="p-name">${p.n}</div>
-                <div class="p-val">${formatTime(p.h, p.m)} <small style="font-size:2vh">${suf}</small></div>
+                <div class="p-val">${formatTime(p.h, p.m)} <small style="font-size:1.8vh">${suf}</small></div>
                 <div class="iqama-val">${calculateIqama(p.h, p.m, p.iqama)}</div>
             </div>`;
     });
@@ -198,18 +197,36 @@ function update(){
     document.getElementById("miladi").innerText = now.toLocaleDateString('ar-EG', {day:'numeric', month:'long', year:'numeric'});
     document.getElementById("hijri").innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day:'numeric', month:'long', year:'numeric'}).format(now);
 
-    let currentS = h * 3600 + m * 60 + s, nextIdx = 0, nextS = 0;
+    let currentS = h * 3600 + m * 60 + s;
+    let nextIdx = 0;
+    let nextS = 0;
+
+    // إصلاح مشكلة NaN من خلال فحص جميع مواقيت الصلاة
     for(let i=0; i<prayerData.length; i++){
         let ps = prayerData[i].h * 3600 + prayerData[i].m * 60;
-        if(ps > currentS){ nextS = ps; nextIdx = i; break; }
+        if(ps > currentS){
+            nextS = ps;
+            nextIdx = i;
+            break;
+        }
     }
-    if(!nextS){ nextS = prayerData.h * 3600 + prayerData.m * 60 + 86400; nextIdx = 0; }
+
+    // إذا انتهت صلوات اليوم، الصلاة القادمة هي فجر اليوم التالي
+    if(nextS === 0){
+        nextS = (prayerData[0].h * 3600 + prayerData[0].m * 60) + 86400; // إضافة ثواني يوم كامل
+        nextIdx = 0;
+    }
 
     document.querySelectorAll(".prayer-item").forEach(el => el.classList.remove("next-prayer"));
     document.getElementById("prayer-"+nextIdx).classList.add("next-prayer");
 
     let diff = nextS - currentS;
-    document.getElementById("timer").innerText = `${String(Math.floor(diff/3600)).padStart(2,'0')}:${String(Math.floor((diff%3600)/60)).padStart(2,'0')}:${String(diff%60).padStart(2,'0')}`;
+    let hh = Math.floor(diff/3600);
+    let mm = Math.floor((diff%3600)/60);
+    let ss = diff%60;
+    
+    document.getElementById("timer").innerText = 
+        `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
 }
 
 init(); update(); setInterval(update, 1000);
